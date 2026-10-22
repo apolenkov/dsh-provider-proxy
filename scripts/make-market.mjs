@@ -9,9 +9,11 @@
  * shipped as a real listing.
  *
  * Usage:
- *   node scripts/make-market.mjs [--out market/dsh-market.json] [--check]
+ *   node scripts/make-market.mjs [--out market/dsh-market.json] [--check] [--source npm|git]
  *
- *   --check  validate the inputs and print the planned entry without writing
+ *   --check   validate the inputs and print the planned entry without writing
+ *   --source  install source recorded in the index: `npm` (default, uses the
+ *             published package) or `git` (pins the current commit)
  */
 import { execFileSync } from 'node:child_process';
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
@@ -32,6 +34,11 @@ function has(name) {
 
 const out = flag('--out') ?? 'market/dsh-market.json';
 const checkOnly = has('--check');
+const sourceKind = flag('--source') ?? 'npm';
+if (sourceKind !== 'npm' && sourceKind !== 'git') {
+  console.error(`error: --source must be npm or git, got ${sourceKind}`);
+  process.exit(1);
+}
 
 function fail(message) {
   console.error(`error: ${message}`);
@@ -104,7 +111,9 @@ const document = {
         {
           version,
           publishTimestamp,
-          source: { type: 'git', url: `${url}.git`, commit },
+          source: sourceKind === 'npm'
+            ? { type: 'npm', name: manifest.name, version }
+            : { type: 'git', url: `${url}.git`, commit },
           engines: { dsh: dshEngine },
         },
       ],

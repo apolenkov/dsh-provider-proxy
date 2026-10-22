@@ -1,6 +1,7 @@
 # dsh-provider-proxy
 
 [![CI](https://github.com/apolenkov/dsh-provider-proxy/actions/workflows/ci.yml/badge.svg)](https://github.com/apolenkov/dsh-provider-proxy/actions/workflows/ci.yml)
+[![npm](https://img.shields.io/npm/v/@apolenkov/dsh-provider-proxy?style=flat-square&logo=npm)](https://www.npmjs.com/package/@apolenkov/dsh-provider-proxy)
 [![License: MIT](https://img.shields.io/badge/license-MIT-yellow?style=flat-square)](./LICENSE)
 [![Node >= 22](https://img.shields.io/badge/node-%3E%3D22-339933?style=flat-square&logo=node.js&logoColor=white)](./package.json)
 [![DSH ^0.2.1-rc.2](https://img.shields.io/badge/DSH-%5E0.2.1--rc.2-4D6BFE?style=flat-square)](https://github.com/deepseek-ai/deepseek-harness)
@@ -31,7 +32,13 @@ ctx.llm.stream({ provider, model })
 
 Prerequisite: a DSH profile with a plugin manager (the Desktop app and `dsh web` both qualify).
 
-**From git** (recommended until the package is published under its final npm scope):
+**From npm** (recommended):
+
+```sh
+dsh plugin --profile <profile> add @apolenkov/dsh-provider-proxy
+```
+
+**From git** (a release tag, no registry involved):
 
 ```sh
 dsh plugin --profile <profile> add git+https://github.com/apolenkov/dsh-provider-proxy.git#v0.1.0
@@ -46,7 +53,7 @@ dsh plugin --profile <profile> add /absolute/path/to/dsh-provider-proxy
 
 Then restart DSH. The bundle inserts the `provider-proxy` row; routes live in that row's config.
 
-> npm note: this package is published (or will be) under the scope `@apolenkov/dsh-provider-proxy`; the unscoped name `dsh-provider-proxy` already belongs to an unrelated package on the public registry, so never `pnpm add dsh-provider-proxy`.
+> npm note: the package is `@apolenkov/dsh-provider-proxy`; the unscoped name `dsh-provider-proxy` belongs to an unrelated package on the public registry, so never `pnpm add dsh-provider-proxy`.
 
 ## Configure
 

@@ -10,7 +10,7 @@ identity decisions below need a human.
 |---|---|---|
 | ~~Public repository URL~~ | Decided | `https://github.com/apolenkov/dsh-provider-proxy` |
 | ~~npm package name~~ | Decided | `@apolenkov/dsh-provider-proxy` — the unscoped name belongs to an unrelated package (v0.6.0) |
-| npm publish credentials | The registry token on this machine is expired | Run `npm login`, then `npm publish --access public` |
+| ~~npm publish~~ | Done | `@apolenkov/dsh-provider-proxy@0.1.0` is on the public registry |
 
 Git-only distribution needs neither decision: `dsh plugin add git+ssh://…` works
 today and is documented in the README.
@@ -55,14 +55,16 @@ git tag v0.1.0 && git push --follow-tags
 dsh plugin --profile <profile> add "git+https://github.com/apolenkov/dsh-provider-proxy.git#$(git rev-parse HEAD)"
 ```
 
-**npm (scoped name only):**
+**npm (published):**
 
 ```sh
-npm publish --access public
+npm publish --access public     # done for 0.1.0
+dsh plugin --profile <profile> add @apolenkov/dsh-provider-proxy
 ```
 
-The unscoped name cannot be published: `npm publish` refuses it because the
-registry already has `dsh-provider-proxy@0.6.0` from another author.
+The unscoped name cannot be published: the registry already has
+`dsh-provider-proxy@0.6.0` from another author, which is why the package uses
+the `@apolenkov` scope.
 
 ## 4. Produce the market index
 
@@ -121,5 +123,7 @@ bundle enabled:
 
 - `$DSH_HOME/provider-proxy/state.json` reported `status: active` with
   `opencode-go/muse-spark-1.3-contributor→http://127.0.0.1:1291, default→inherit`.
-- `npm publish` under the scope is the only remaining step and needs a valid
-  registry token (`npm login`); the git/market route is fully validated.
+- npm: `@apolenkov/dsh-provider-proxy@0.1.0` is published; the package page is
+  <https://www.npmjs.com/package/@apolenkov/dsh-provider-proxy>.
+- Marketplace index now records the npm source, so Discover installs the
+  published package rather than a pinned commit.

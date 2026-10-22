@@ -1,6 +1,7 @@
 # dsh-provider-proxy
 
 [![CI](https://github.com/apolenkov/dsh-provider-proxy/actions/workflows/ci.yml/badge.svg)](https://github.com/apolenkov/dsh-provider-proxy/actions/workflows/ci.yml)
+[![npm](https://img.shields.io/npm/v/@apolenkov/dsh-provider-proxy?style=flat-square&logo=npm)](https://www.npmjs.com/package/@apolenkov/dsh-provider-proxy)
 [![License: MIT](https://img.shields.io/badge/license-MIT-yellow?style=flat-square)](./LICENSE)
 [![Node >= 22](https://img.shields.io/badge/node-%3E%3D22-339933?style=flat-square&logo=node.js&logoColor=white)](./package.json)
 [![DSH ^0.2.1-rc.2](https://img.shields.io/badge/DSH-%5E0.2.1--rc.2-4D6BFE?style=flat-square)](https://github.com/deepseek-ai/deepseek-harness)
@@ -31,7 +32,13 @@ ctx.llm.stream({ provider, model })
 
 Требуется профиль с менеджером плагинов (подходят и Desktop-приложение, и `dsh web`).
 
-**Из git** (рекомендуется, пока пакет не опубликован под финальным npm-именем):
+**Из npm** (рекомендуется):
+
+```sh
+dsh plugin --profile <profile> add @apolenkov/dsh-provider-proxy
+```
+
+**Из git** (по тегу релиза, без участия реестра):
 
 ```sh
 dsh plugin --profile <profile> add git+https://github.com/apolenkov/dsh-provider-proxy.git#v0.1.0
@@ -46,7 +53,7 @@ dsh plugin --profile <profile> add /absolute/path/to/dsh-provider-proxy
 
 Затем перезапустите DSH. Бандл вставляет строку `provider-proxy`; маршруты хранятся в конфиге этой строки.
 
-> Замечание про npm: пакет публикуется (или будет опубликован) под скоупом `@apolenkov/dsh-provider-proxy`; нескоупленное имя `dsh-provider-proxy` уже принадлежит несвязанному пакету в публичном реестре, поэтому никогда не выполняйте `pnpm add dsh-provider-proxy`.
+> Замечание про npm: пакет называется `@apolenkov/dsh-provider-proxy`; нескоупленное имя `dsh-provider-proxy` принадлежит несвязанному пакету в публичном реестре, поэтому никогда не выполняйте `pnpm add dsh-provider-proxy`.
 
 ## Настройка
 

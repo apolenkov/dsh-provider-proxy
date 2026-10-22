@@ -18,4 +18,6 @@ and versions follow [Semantic Versioning](https://semver.org/).
 
 ## [0.1.0] - 2026-10-22
 
-- Initial public repository scaffold.
+- Initial public release: per-provider and per-model proxy routing, the Proxy routes
+  Plugins page, diagnostics, examples, docs, and market tooling.
+- Published to npm as `@apolenkov/dsh-provider-proxy`.

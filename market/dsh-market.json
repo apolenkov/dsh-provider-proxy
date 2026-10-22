@@ -67,11 +67,11 @@
       "versions": [
         {
           "version": "0.1.0",
-          "publishTimestamp": 1792671388,
+          "publishTimestamp": 1792672286,
           "source": {
-            "type": "git",
-            "url": "https://github.com/apolenkov/dsh-provider-proxy.git",
-            "commit": "44a56c4c8d36edf22d2f02342e043a867daea255"
+            "type": "npm",
+            "name": "@apolenkov/dsh-provider-proxy",
+            "version": "0.1.0"
           },
           "engines": {
             "dsh": "^0.2.1-rc.2"
