@@ -116,6 +116,8 @@ dsh plugin --profile <profile> add git+https://github.com/apolenkov/dsh-provider
 
 ## 演示
 
+![设置中的代理路由页](assets/screenshots/settings-proxy-routes-zh.png)
+
 ![代理路由设置页：提供商规则与 Muse Spark 模型规则、内联校验错误与保存成功](assets/gifs/proxy-ui.gif)
 
 在临时配置中用回环代理录制：打开设置页、添加 Muse Spark 规则、触发并修正校验错误、保存，最后展示 Settings 中的页面。单帧见 [`assets/screenshots/`](./assets/screenshots/)。

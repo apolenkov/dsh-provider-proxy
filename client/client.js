@@ -92,7 +92,13 @@ window.__ModuleLoader__.load({
 
     function apply(ctx) {
       const form = ctx.configForms.get(ENTRY_ID);
-      const locale = ctx.locale;
+      let locale;
+      try {
+        locale = ctx.locale;
+      } catch {
+        // Older hosts may not expose the locale face; the browser language is the fallback.
+        locale = undefined;
+      }
       const navLabel = () => NAV[detectLang(locale)] ?? NAV.en;
 
       // 1. The bundle's page on the Plugins screen.
