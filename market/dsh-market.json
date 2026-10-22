@@ -66,12 +66,12 @@
       },
       "versions": [
         {
-          "version": "0.1.0",
-          "publishTimestamp": 1792672286,
+          "version": "0.2.0",
+          "publishTimestamp": 1792679068,
           "source": {
             "type": "npm",
             "name": "@apolenkov/dsh-provider-proxy",
-            "version": "0.1.0"
+            "version": "0.2.0"
           },
           "engines": {
             "dsh": "^0.2.1-rc.2"
