@@ -3,7 +3,7 @@
 [![License: MIT](https://img.shields.io/badge/license-MIT-yellow?style=flat-square)](./LICENSE)
 [![Node >= 22](https://img.shields.io/badge/node-%3E%3D22-339933?style=flat-square&logo=node.js&logoColor=white)](./package.json)
 [![DSH ^0.2.1-rc.2](https://img.shields.io/badge/DSH-%5E0.2.1--rc.2-4D6BFE?style=flat-square)](https://github.com/deepseek-ai/deepseek-harness)
-[![Tests](https://img.shields.io/badge/tests-24%20passing-brightgreen?style=flat-square)](#development)
+[![Tests](https://img.shields.io/badge/tests-34%20passing-brightgreen?style=flat-square)](#development)
 
 Per-provider and per-model outbound proxy routing for [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness).
 
@@ -144,7 +144,7 @@ Recorded in a scratch profile with a loopback proxy: open the bundle’s Configu
 
 ```sh
 pnpm install --ignore-scripts   # or: pnpm install --frozen-lockfile
-pnpm test                       # node:test, 24 tests: matching, precedence, ALS isolation, egress, wiring
+pnpm test                       # node:test, 34 tests: matching, precedence, ALS isolation, egress, wiring, volatile updates, agent retirement, client contract
 pnpm check                      # manifest + secrets + market validation + full test suite
 ```
 

@@ -11,6 +11,7 @@ import { AsyncLocalStorage } from 'node:async_hooks'
 import {
   DIRECT,
   INHERIT,
+  collectProxyUris,
   describeRoutes,
   isLoopback,
   normalizeConfig,
@@ -128,6 +129,22 @@ test('invalid entries refuse the whole configuration and report every problem', 
   assert.ok(messages.some((message) => message.includes('not supported')), messages.join('\n'))
   assert.ok(messages.some((message) => message.includes('hosts')))
   assert.ok(messages.some((message) => message.includes('URL')))
+})
+
+test('collectProxyUris lists every proxied rule exactly once', () => {
+  const routes = normalizeConfig({
+    providers: {
+      a: { hosts: ['a.test'], proxy: 'http://127.0.0.1:1' },
+      b: { hosts: ['b.test'], proxy: 'http://127.0.0.1:1' },
+      c: { hosts: ['c.test'], proxy: 'direct' },
+    },
+    models: {
+      m: 'http://127.0.0.1:2',
+      n: { proxy: 'http://127.0.0.1:1', provider: 'p' },
+      o: 'inherit',
+    },
+  })
+  assert.deepEqual([...collectProxyUris(routes)].sort(), ['http://127.0.0.1:1', 'http://127.0.0.1:2'].sort())
 })
 
 test('describeRoutes renders a readable one-liner', () => {

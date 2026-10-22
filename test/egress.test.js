@@ -14,7 +14,7 @@ import { AsyncLocalStorage } from 'node:async_hooks'
 
 import * as undici from 'undici'
 
-import { createRoutingDispatcher, normalizeConfig } from '../core.js'
+import { collectProxyUris, createRoutingDispatcher, installRoutes, normalizeConfig } from '../core.js'
 
 /** Start a recording HTTP proxy that refuses every CONNECT. */
 async function startProxy() {
@@ -168,5 +168,62 @@ test('loopback stays direct even when a rule names it', async () => {
     }
   } finally {
     await proxy.close()
+  }
+})
+
+test('a removed proxy rule stops receiving traffic and its agent is closed', async () => {
+  const proxyA = await startProxy()
+  const proxyB = await startProxy()
+  // Wrap, do not subclass: undici's DispatcherBase.close(cb) calls this.close(cb),
+  // so overriding `close` on a subclass recurses forever.
+  const closed = []
+  class SpyProxyAgent {
+    constructor(options) {
+      this.inner = new undici.ProxyAgent(options)
+      this.proxyUri = options.uri
+    }
+
+    dispatch(options, handler) {
+      return this.inner.dispatch(options, handler)
+    }
+
+    async close() {
+      closed.push(this.proxyUri)
+      return this.inner.close()
+    }
+
+    destroy() {
+      return this.inner.destroy()
+    }
+  }
+  const als = new AsyncLocalStorage()
+  const routes = normalizeConfig({ models: { alpha: proxyA.uri } })
+  assert.notEqual(routes, undefined)
+  const previous = new undici.Agent()
+  const dispatcher = createRoutingDispatcher({
+    undici: { ...undici, ProxyAgent: SpyProxyAgent },
+    previous,
+    routes,
+    als,
+  })
+  const global = undici.getGlobalDispatcher()
+  undici.setGlobalDispatcher(dispatcher)
+  try {
+    await assert.rejects(als.run({ provider: 'p', model: 'alpha' }, () => fetch('https://alpha.test/')))
+    assert.deepEqual(proxyA.seen, ['alpha.test:443'])
+    const next = normalizeConfig({ models: { alpha: proxyB.uri } })
+    assert.notEqual(next, undefined)
+    installRoutes(routes, next)
+    await dispatcher.prune(collectProxyUris(routes))
+    assert.deepEqual(closed, [proxyA.uri])
+    await assert.rejects(als.run({ provider: 'p', model: 'alpha' }, () => fetch('https://alpha.test/')))
+    assert.deepEqual(proxyB.seen, ['alpha.test:443'])
+    assert.equal(proxyA.seen.length, 1)
+  } finally {
+    undici.setGlobalDispatcher(global)
+    await dispatcher.close()
+    await previous.close()
+    await proxyA.close()
+    await proxyB.close()
   }
 })

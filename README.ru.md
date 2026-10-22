@@ -3,7 +3,7 @@
 [![License: MIT](https://img.shields.io/badge/license-MIT-yellow?style=flat-square)](./LICENSE)
 [![Node >= 22](https://img.shields.io/badge/node-%3E%3D22-339933?style=flat-square&logo=node.js&logoColor=white)](./package.json)
 [![DSH ^0.2.1-rc.2](https://img.shields.io/badge/DSH-%5E0.2.1--rc.2-4D6BFE?style=flat-square)](https://github.com/deepseek-ai/deepseek-harness)
-[![Tests](https://img.shields.io/badge/tests-24%20passing-brightgreen?style=flat-square)](#Разработка)
+[![Tests](https://img.shields.io/badge/tests-34%20passing-brightgreen?style=flat-square)](#Разработка)
 
 Прокси-маршрутизация исходящих запросов по провайдеру и по ID модели для [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness).
 
@@ -144,7 +144,7 @@ dsh plugin --profile <profile> add /absolute/path/to/dsh-provider-proxy
 
 ```sh
 pnpm install --ignore-scripts   # или: pnpm install --frozen-lockfile
-pnpm test                       # node:test, 24 теста: матчинг, приоритеты, изоляция ALS, egress, wiring
+pnpm test                       # node:test, 34 теста: матчинг, приоритеты, изоляция ALS, egress, wiring, volatile-обновления, освобождение агентов, контракт клиента
 pnpm check                      # манифест + секреты + валидация маркета + полный набор тестов
 ```
 

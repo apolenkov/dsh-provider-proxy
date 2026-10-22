@@ -30,7 +30,7 @@ import { join } from 'node:path'
 
 import z from '@deepseek-ai/schemastery'
 
-import { createRoutingDispatcher, describeRoutes, normalizeConfig, wrapWithStore } from './core.js'
+import { collectProxyUris, createRoutingDispatcher, describeRoutes, installRoutes, normalizeConfig, wrapWithStore } from './core.js'
 
 /**
  * Accept the three proxy decisions used across routes.
@@ -91,12 +91,6 @@ function snapshotConfig(config) {
   }
 }
 
-/** Replace a normalized route table in place so the installed dispatcher sees it. */
-function installRoutes(target, next) {
-  for (const key of Object.keys(target)) Reflect.deleteProperty(target, key)
-  Object.assign(target, next)
-}
-
 /**
  * Mount the plugin.
  *
@@ -151,6 +145,7 @@ export async function apply(ctx, config) {
       return false
     }
     installRoutes(current, next)
+    if (dispatcher && typeof dispatcher.prune === 'function') await dispatcher.prune(collectProxyUris(current)).catch(() => {})
     log.info(`${reason}: active — %s`, describeRoutes(current))
     writeState({ status: 'active', routes: describeRoutes(current), inherited: previous?.constructor?.name ?? null })
     return true

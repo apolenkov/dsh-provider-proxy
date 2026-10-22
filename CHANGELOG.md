@@ -11,6 +11,7 @@ and versions follow [Semantic Versioning](https://semver.org/).
 - Settings UI page (Plugins row configuration) with staged drafts, revision-fenced writes, inline validation, and `en`/`ru` copy.
 - Fail-closed configuration: invalid entries refuse the whole route set and never route traffic surprisingly.
 - Diagnostics file `$DSH_HOME/provider-proxy/state.json` recording apply outcome and routes.
+- Removed proxy rules retire and close their cached proxy agents instead of leaking them for the process lifetime.
 - Egress, concurrency, wiring, and manifest test suites (`node --test test/`).
 - DSH marketplace format-1 example index and validating tooling.
 

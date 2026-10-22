@@ -244,6 +244,30 @@ export function resolveDecision(routes, store, url) {
   return decided ?? routes.fallback
 }
 
+/**
+ * Collect every proxy URI a normalized route table references.
+ * Used to retire cached agents whose rule was removed.
+ */
+export function collectProxyUris(routes) {
+  const uris = new Set();
+  for (const rule of routes.models) {
+    if (rule.decision.kind === 'proxy') uris.add(rule.decision.uri);
+  }
+  for (const rule of routes.hosts) {
+    if (rule.decision.kind === 'proxy') uris.add(rule.decision.uri);
+  }
+  return uris;
+}
+
+/**
+ * Replace a normalized route table in place so a live dispatcher installed
+ * against it sees the new rules without a remount.
+ */
+export function installRoutes(target, next) {
+  for (const key of Object.keys(target)) Reflect.deleteProperty(target, key)
+  Object.assign(target, next)
+}
+
 /** One-line summary for the startup log; never includes proxy credentials unless the URL carries them. */
 export function describeRoutes(routes) {
   const parts = routes.models.map((rule) => {
@@ -356,6 +380,17 @@ export function createRoutingDispatcher({ undici, previous, routes, als }) {
       if (decision.kind === 'direct') return poolFor(url.origin).dispatch(options, handler)
       if (decision.kind === 'proxy') return proxyFor(decision.uri).dispatch(options, handler)
       return inheritedFor(url).dispatch(options, handler)
+    }
+
+    /** Close cached proxy agents whose rule was removed; pools stay cached like a stock Agent. */
+    async prune(validUris) {
+      const closing = []
+      for (const [uri, agent] of proxies) {
+        if (validUris.has(uri)) continue
+        proxies.delete(uri)
+        closing.push(agent.close().catch(() => {}))
+      }
+      await Promise.allSettled(closing)
     }
 
     async close() {
