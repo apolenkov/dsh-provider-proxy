@@ -140,6 +140,16 @@ dsh plugin --profile <profile> add /absolute/path/to/dsh-provider-proxy
 
 Записано в тестовом профиле с loopback-прокси: откройте Configure бандла, добавьте правило модели Muse Spark, вызовите и исправьте ошибку валидации, сохраните. Отдельные кадры — в [`assets/screenshots/`](./assets/screenshots/); повторить запись можно скриптом [`assets/scripts/record-proxy-ui.sh`](./assets/scripts/record-proxy-ui.sh).
 
+## Публикация
+
+Чек-лист владельца для первого публичного релиза (URL репозитория, npm-скоуп, индекс маркета,
+листинг в хабе): [docs/publishing.md](./docs/publishing.md). Автоматические проверки:
+
+```sh
+pnpm check:release   # строгий манифест + секреты + сгенерированный индекс + тесты
+pnpm release:market  # создаёт market/dsh-market.json из package.json и HEAD
+```
+
 ## Разработка
 
 ```sh

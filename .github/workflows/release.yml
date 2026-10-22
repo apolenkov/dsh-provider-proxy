@@ -25,6 +25,7 @@ jobs:
           cache: pnpm
       - run: pnpm install --frozen-lockfile --ignore-scripts
       - run: pnpm check
+      - run: pnpm check:release
       - name: Create tag
         if: inputs.dry-run != 'true'
         run: |

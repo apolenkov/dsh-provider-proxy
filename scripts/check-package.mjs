@@ -4,7 +4,8 @@
  *
  * Fails on missing manifest fields, missing published files, a client bundle id
  * that drifts from the package name, unresolved placeholders in shipped metadata,
- * or an incompatible DSH engine range. Run with `pnpm check:package`.
+ * or an incompatible DSH engine range. Run with `pnpm check:package`; pass
+ * `--strict` to also refuse metadata placeholders before a release.
  *
  * Usage: node scripts/check-package.mjs
  */
@@ -13,6 +14,7 @@ import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const root = join(fileURLToPath(import.meta.url), '..', '..');
+const strict = process.argv.includes('--strict');
 const failures = [];
 const warnings = [];
 
@@ -111,7 +113,9 @@ if (manifest) {
   }
   const repositoryUrl = manifest.repository?.url ?? '';
   if (repositoryUrl.includes('<') || repositoryUrl.includes('>')) {
-    warn('package.json: repository.url still has an owner placeholder; replace it before publishing');
+    const message = 'package.json: repository.url still has an owner placeholder; replace it before publishing';
+    if (strict) fail(message);
+    else warn(message);
   }
 }
 

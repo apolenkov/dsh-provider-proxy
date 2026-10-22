@@ -140,6 +140,16 @@ A live rule can be proven by pointing it at a dead proxy (`http://127.0.0.1:9`) 
 
 Recorded in a scratch profile with a loopback proxy: open the bundle’s Configure page, add the Muse Spark model rule, trigger and fix a validation error, save. Individual frames live in [`assets/screenshots/`](./assets/screenshots/); reproduce or re-record with [`assets/scripts/record-proxy-ui.sh`](./assets/scripts/record-proxy-ui.sh).
 
+## Publishing
+
+Owner-side checklist for the first public release (repository URL, npm scope, market index,
+hub listing): [docs/publishing.md](./docs/publishing.md). Automated gates:
+
+```sh
+pnpm check:release   # strict manifest + secrets + generated market index + tests
+pnpm release:market  # writes market/dsh-market.json from package.json + HEAD
+```
+
 ## Development
 
 ```sh

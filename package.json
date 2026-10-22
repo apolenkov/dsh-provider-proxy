@@ -27,7 +27,9 @@
     "check": "node scripts/check-package.mjs && node scripts/check-no-secrets.mjs && node scripts/verify-market.mjs && node --test",
     "check:package": "node scripts/check-package.mjs",
     "check:market": "node scripts/verify-market.mjs",
-    "check:secrets": "node scripts/check-no-secrets.mjs"
+    "check:secrets": "node scripts/check-no-secrets.mjs",
+    "check:release": "node scripts/check-package.mjs --strict && node scripts/check-no-secrets.mjs && node scripts/make-market.mjs --check && node --test",
+    "release:market": "node scripts/make-market.mjs"
   },
   "engines": {
     "node": ">=22",
