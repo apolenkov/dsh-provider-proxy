@@ -94,13 +94,27 @@ bundle enabled:
 
 ![Proxy routes page of the bundle installed from the market](../assets/screenshots/market-installed-config.png)
 
-## 6. List in the community hub
+## 6. Directory submissions
+
+Submitted on 2026-10-22 (each PR adds one entry, per that list's rules):
+
+| Directory | Pull request | Notes |
+|---|---|---|
+| `awesome-dsh-plugin/awesome-dsh-plugin` | ready, opens after the 24 h repo-age gate | `data/plugins/apolenkov__dsh-provider-proxy.yml`, category `model` |
+| `beancookie/awesome-dsh-plugin` | [#235](https://github.com/beancookie/awesome-dsh-plugin/pull/235) | one line in `README.md` + `README.en.md`, alphabetical |
+| `kejixiaoliang/awesome-dsh-plugins` | [#148](https://github.com/kejixiaoliang/awesome-dsh-plugins/pull/148) | `plugins/infrastructure-dev.md`, runtime section |
+| `dshworks/awesome-dsh-plugins` | [#182](https://github.com/dshworks/awesome-dsh-plugins/pull/182) | `data/plugins.json` entry, `validate` + `render` run |
+
+`bruc3van/awesome-dsh-plugin` requires more than 10 stars for a self-submission;
+resubmit after the repository gains traction.
+
+## 7. List in the community hub
 
 1. Add the `dsh-plugin` topic to the public repository (the hub discovers plugins by topic).
 2. Open a submission issue through [dsh.market](https://dsh.market/) if the hub requires one.
 3. After acceptance, add the hub badge to both READMEs.
 
-## 7. After release
+## 8. After release
 
 - Verify the published bundle loads: install it into a scratch profile, open
   Plugins → provider-proxy → Configure, and confirm `$DSH_HOME/provider-proxy/state.json`
