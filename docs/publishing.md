@@ -89,3 +89,20 @@ index is served. `market/dsh-market.example.json` stays a template.
 - Record the walkthrough GIF against that scratch profile with
   [`assets/scripts/record-proxy-ui.sh`](../assets/scripts/record-proxy-ui.sh).
 - Update `CHANGELOG.md` with the released version and date.
+
+## Verified state (2026-10-22)
+
+- Repository: <https://github.com/apolenkov/dsh-provider-proxy> — public, `dsh-plugin` topic set.
+- Release tag `v0.1.0`; CI green on `main` (`.github/workflows/ci.yml`).
+- Installed from the public URL into a scratch profile and loaded in the browser:
+
+  ```sh
+  dsh plugin --profile <profile> add "git+https://github.com/apolenkov/dsh-provider-proxy.git#v0.1.0"
+  ```
+
+  ![Proxy routes page of the publicly installed bundle](../assets/screenshots/proxy-page-public-install.png)
+
+- `$DSH_HOME/provider-proxy/state.json` reported `status: active` with
+  `opencode-go/muse-spark-1.3-contributor→http://127.0.0.1:1291, default→inherit`.
+- `npm publish` under the scope is the only remaining step and needs a valid
+  registry token (`npm login`); the git/market route is fully validated.
