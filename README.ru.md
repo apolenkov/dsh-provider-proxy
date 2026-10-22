@@ -1,5 +1,6 @@
 # dsh-provider-proxy
 
+[![CI](https://github.com/apolenkov/dsh-provider-proxy/actions/workflows/ci.yml/badge.svg)](https://github.com/apolenkov/dsh-provider-proxy/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-yellow?style=flat-square)](./LICENSE)
 [![Node >= 22](https://img.shields.io/badge/node-%3E%3D22-339933?style=flat-square&logo=node.js&logoColor=white)](./package.json)
 [![DSH ^0.2.1-rc.2](https://img.shields.io/badge/DSH-%5E0.2.1--rc.2-4D6BFE?style=flat-square)](https://github.com/deepseek-ai/deepseek-harness)
