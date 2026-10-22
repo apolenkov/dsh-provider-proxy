@@ -1,0 +1,15 @@
+# Model prefixes and provider pins.
+#
+# Precedence: provider-pinned exact id, bare exact id, provider-pinned prefix,
+# bare prefix, then provider host rules, then default.
+- id: provider-proxy
+  name: "dsh-provider-proxy"
+  config:
+    default: direct
+    providers: {}
+    models:
+      "deepseek-v4.1-flash":
+        provider: opencode-go
+        proxy: "http://127.0.0.1:1291"
+      "muse-spark-1.3-contributor": "http://127.0.0.1:1291"
+      "longcat-*": inherit

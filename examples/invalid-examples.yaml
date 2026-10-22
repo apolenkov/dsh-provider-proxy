@@ -1,0 +1,17 @@
+# INVALID examples. Do not paste these active: the plugin rejects the whole
+# configuration when any entry is invalid (fail-closed).
+#
+# - default: socks5://127.0.0.1:1080        # rejected: only http(s) proxies
+# - providers:
+#     broken:
+#       hosts: []                            # rejected: every provider needs hosts
+#       proxy: direct
+#     badhost:
+#       hosts: ["https://evil.example"]      # rejected: host, not URL
+#       proxy: direct
+#   models:
+#     "": direct                             # rejected: empty model id
+#     "alpha": "http://<user>:<password>@127.0.0.1:8080"
+#                                            # INVALID on purpose: the transport would
+#                                            # accept real credentials here, but the UI
+#                                            # refuses any proxy URL with userinfo.

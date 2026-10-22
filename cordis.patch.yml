@@ -1,0 +1,17 @@
+# provider-proxy — per-provider and per-model outbound proxy routing.
+# Install this bundle from the public repository, then configure its row.
+# This bundle only inserts the plugin. Routes belong to the profile:
+#
+#   - id: provider-proxy
+#     name: 'dsh-provider-proxy'
+#     config:
+#       default: inherit
+#       providers:
+#         corp: { hosts: ['corp.example'], proxy: direct }
+#       models:
+#         'deepseek-v4.1-flash': 'http://127.0.0.1:1291'
+#         'muse-spark-1.3-contributor': direct
+#         'longcat-*': inherit
+- insert:
+    - id: provider-proxy
+      name: 'dsh-provider-proxy'

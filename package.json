@@ -1,0 +1,68 @@
+{
+  "name": "dsh-provider-proxy",
+  "version": "0.1.0",
+  "description": "Per-provider and per-model outbound proxy routing for DeepSeek Harness",
+  "type": "module",
+  "main": "index.js",
+  "exports": {
+    ".": "./index.js",
+    "./client": "./client/client.js",
+    "./package.json": "./package.json",
+    "./locale/*.json": "./locale/*.json"
+  },
+  "files": [
+    "index.js",
+    "core.js",
+    "cordis.patch.yml",
+    "client/*.js",
+    "locale/*.json",
+    "icon.svg",
+    "README.md",
+    "README.ru.md",
+    "LICENSE",
+    "CHANGELOG.md"
+  ],
+  "scripts": {
+    "test": "node --test test/",
+    "check": "node scripts/check-package.mjs && node scripts/check-no-secrets.mjs && node scripts/verify-market.mjs && node --test test/",
+    "check:package": "node scripts/check-package.mjs",
+    "check:market": "node scripts/verify-market.mjs",
+    "check:secrets": "node scripts/check-no-secrets.mjs"
+  },
+  "engines": {
+    "node": ">=22",
+    "dsh": "^0.2.1-rc.2"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/<OWNER>/dsh-provider-proxy.git"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "peerDependencies": {
+    "@deepseek-ai/schemastery": "^3.18.5",
+    "undici": "^8.11.2"
+  },
+  "devDependencies": {
+    "@deepseek-ai/dsh-plugin-market-index": "0.2.1-alpha.4",
+    "@deepseek-ai/schemastery": "3.18.5",
+    "undici": "8.11.2"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web",
+      "inject": [
+        "@deepseek-ai/dsh-client-locale",
+        "@deepseek-ai/dsh-client-ui-settings",
+        "@deepseek-ai/dsh-client-ui-plugin-manager",
+        "@deepseek-ai/dsh-api-remotes"
+      ]
+    }
+  },
+  "icon": "./icon.svg"
+}

@@ -1,0 +1,16 @@
+# Host-axis example: route whole provider hosts, keep the rest on the launcher policy.
+- id: provider-proxy
+  name: "dsh-provider-proxy"
+  config:
+    default: inherit
+    providers:
+      corp:
+        hosts:
+          - "llm.internal.example"
+          - "llm.internal.example:8443"
+        proxy: direct
+      opencode-go:
+        hosts:
+          - "opencode.ai"
+        proxy: "http://127.0.0.1:1301"
+    models: {}

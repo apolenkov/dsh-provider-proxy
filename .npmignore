@@ -1,0 +1,10 @@
+test/
+docs/
+examples/
+market/
+assets/
+scripts/
+.github/
+pnpm-lock.yaml
+tmp/
+coverage/

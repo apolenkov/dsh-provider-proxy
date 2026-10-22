@@ -1,0 +1,74 @@
+{
+  "format": 1,
+  "title": {
+    "en": "Example index for dsh-provider-proxy (do not publish as-is)",
+    "ru": "Пример индекса для dsh-provider-proxy (не публикуйте как есть)"
+  },
+  "description": {
+    "en": "Template of the DeepSeek Harness market index entry. Copy, fill in the real repository URL and commit, then validate with pnpm check:market before publishing.",
+    "ru": "Шаблон записи индекса маркета DeepSeek Harness. Скопируйте, подставьте настоящий URL репозитория и коммит, затем проверьте командой pnpm check:market перед публикацией."
+  },
+  "metadata": {
+    "categories": {
+      "networking": {
+        "title": {
+          "en": "Networking",
+          "ru": "Сеть"
+        }
+      }
+    },
+    "labels": {
+      "proxy": {
+        "title": {
+          "en": "Proxy",
+          "ru": "Прокси"
+        }
+      },
+      "llm": {
+        "title": {
+          "en": "LLM routing",
+          "ru": "Маршрутизация LLM"
+        }
+      }
+    },
+    "sortKeys": {}
+  },
+  "plugins": [
+    {
+      "name": "dsh-provider-proxy",
+      "title": {
+        "en": "Provider Proxy",
+        "ru": "Маршруты прокси"
+      },
+      "description": {
+        "en": "Route provider hosts and model IDs through selected proxies.",
+        "ru": "Направляйте хосты провайдеров и ID моделей через выбранные прокси."
+      },
+      "author": "dsh-provider-proxy contributors",
+      "homepage": "https://example.com/acme/dsh-provider-proxy",
+      "repository": {
+        "url": "https://example.com/acme/dsh-provider-proxy.git"
+      },
+      "metadata": {
+        "category": "networking",
+        "keywords": ["proxy", "provider", "model", "routing"],
+        "labels": ["proxy", "llm"],
+        "sortKeys": {}
+      },
+      "versions": [
+        {
+          "version": "0.1.0",
+          "publishTimestamp": 1761091200,
+          "source": {
+            "type": "git",
+            "url": "https://example.com/acme/dsh-provider-proxy.git",
+            "commit": "0000000000000000000000000000000000000000"
+          },
+          "engines": {
+            "dsh": "^0.2.1-rc.2"
+          }
+        }
+      ]
+    }
+  ]
+}

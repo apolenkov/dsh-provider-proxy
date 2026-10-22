@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "Proxy routes",
+    "description": "Route provider hosts and model IDs through selected proxies."
+  }
+}

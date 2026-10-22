@@ -1,0 +1,38 @@
+name: Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Exact SemVer version to tag (e.g. 0.1.0)"
+        required: true
+      dry-run:
+        description: "Run checks without tagging"
+        required: false
+        default: "true"
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile --ignore-scripts
+      - run: pnpm check
+      - name: Create tag
+        if: inputs.dry-run != 'true'
+        run: |
+          git tag "v${{ inputs.version }}"
+          git push origin "v${{ inputs.version }}"
+      - name: Next steps (manual)
+        run: |
+          echo "Tagged v${{ inputs.version }}."
+          echo "npm publish is intentionally NOT automated: the unscoped name"
+          echo "dsh-provider-proxy is taken on the public registry, so the first"
+          echo "release must pick a final scoped package name, then publish."
