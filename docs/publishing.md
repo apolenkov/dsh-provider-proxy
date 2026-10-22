@@ -139,5 +139,6 @@ resubmit after the repository gains traction.
   `opencode-go/muse-spark-1.3-contributor→http://127.0.0.1:1291, default→inherit`.
 - npm: `@apolenkov/dsh-provider-proxy@0.1.0` is published; the package page is
   <https://www.npmjs.com/package/@apolenkov/dsh-provider-proxy>.
-- Marketplace index now records the npm source, so Discover installs the
-  published package rather than a pinned commit.
+- The marketplace index currently records the **git** source (tag commit), because the
+  0.2.0 npm publication is waiting for an interactive 2FA confirmation. Regenerate the
+  index with `pnpm release:market` (npm source) once 0.2.0 is on the registry.
