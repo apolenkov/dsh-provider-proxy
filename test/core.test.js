@@ -2,7 +2,7 @@
  * Unit tests for the routing core — no network, no DSH.
  *
  * Run with the runtime the Desktop app uses:
- *   node --test test/
+ *   node --test
  */
 import test from 'node:test'
 import assert from 'node:assert/strict'

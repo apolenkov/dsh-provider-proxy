@@ -23,8 +23,8 @@
     "CHANGELOG.md"
   ],
   "scripts": {
-    "test": "node --test test/",
-    "check": "node scripts/check-package.mjs && node scripts/check-no-secrets.mjs && node scripts/verify-market.mjs && node --test test/",
+    "test": "node --test",
+    "check": "node scripts/check-package.mjs && node scripts/check-no-secrets.mjs && node scripts/verify-market.mjs && node --test",
     "check:package": "node scripts/check-package.mjs",
     "check:market": "node scripts/verify-market.mjs",
     "check:secrets": "node scripts/check-no-secrets.mjs"

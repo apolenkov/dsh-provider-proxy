@@ -8,7 +8,7 @@
  *
  * Usage: node scripts/check-package.mjs
  */
-import { existsSync, readFileSync } from 'node:fs';
+import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -70,7 +70,6 @@ if (manifest) {
     }
   }
   if (typeof manifest.icon !== 'string' || !existsSync(join(root, manifest.icon))) fail('package.json: icon must point at an existing file');
-  const { readdirSync } = await import('node:fs');
   for (const [point, target] of Object.entries(manifest.exports ?? {})) {
     if (point === './package.json') continue;
     const cleaned = String(target).replace(/^\.\//, '');

@@ -3,8 +3,8 @@
  *
  * Registers the Proxy routes page on the row's Plugins page via the
  * `plugins.bundle.config` slot. The page implementation lives in lazily loaded
- * chunks (`client.ui.js`, `client.strings.js`, `client.validate.js`,
- * `client.theme.js`) so every committed file stays small; chunks are fetched
+ * chunks (`client.ui.js`, `client.fields.js`, `client.strings.js`,
+ * `client.validate.js`, `client.theme.js`) so every committed file stays small; chunks are fetched
  * with `require.async`, the only cross-file mechanism the DSH module system
  * supports for package-local code.
  */
@@ -28,9 +28,10 @@ window.__ModuleLoader__.load({
           require.async('./client.strings.js'),
           require.async('./client.validate.js'),
           require.async('./client.theme.js'),
+          require.async('./client.fields.js'),
         ])
-          .then(([ui, strings, validate, theme]) => {
-            if (!cancelled) setParts({ ui, strings, validate, theme });
+          .then(([ui, strings, validate, theme, fields]) => {
+            if (!cancelled) setParts({ ui, strings, validate, theme, fields });
           })
           .catch(() => {
             if (!cancelled) setFailed(true);
@@ -49,6 +50,7 @@ window.__ModuleLoader__.load({
         STRINGS: parts.strings.STRINGS,
         V: parts.validate,
         CSS: parts.theme.CSS,
+        F: parts.fields,
         lang,
       });
     }

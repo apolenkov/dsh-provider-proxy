@@ -34,6 +34,7 @@ test('client chunks register the ids the loader resolves', () => {
     'client.strings.js': 'dsh-provider-proxy/client.strings.js',
     'client.validate.js': 'dsh-provider-proxy/client.validate.js',
     'client.ui.js': 'dsh-provider-proxy/client.ui.js',
+    'client.fields.js': 'dsh-provider-proxy/client.fields.js',
     'client.theme.js': 'dsh-provider-proxy/client.theme.js',
   };
   for (const [file, id] of Object.entries(byFile)) {
