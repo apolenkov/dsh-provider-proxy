@@ -105,7 +105,7 @@ if (manifest) {
     }
     if (!existsSync(join(root, cleaned))) fail(`package.json: files entry is missing: ${file}`);
   }
-  for (const locale of ['locale/en.json', 'locale/ru.json']) {
+  for (const locale of ['locale/en.json', 'locale/ru.json', 'locale/zh.json']) {
     const data = readJson(locale);
     if (data && (typeof data?.meta?.title !== 'string' || typeof data?.meta?.description !== 'string')) {
       fail(`${locale}: meta.title and meta.description are required`);

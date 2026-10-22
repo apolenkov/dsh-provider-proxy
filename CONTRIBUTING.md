@@ -19,6 +19,17 @@
 - Accessibility is a requirement, not polish: visible labels, inline errors with links from an error summary, keyboard focus management, 44px minimum touch targets, and `prefers-reduced-motion` support.
 - New model/host matching semantics need unit tests in `test/core.test.js`; new transport behavior needs egress tests with the recording proxy; new plugin lifecycle behavior needs wiring tests.
 
+## Labels
+
+| Label | Use it for |
+|---|---|
+| `area/routing` | Matcher, precedence, dispatcher, fail-closed behaviour. |
+| `area/ui` | Settings/Plugins pages, accessibility, copy, screenshots. |
+| `area/docs` | Documentation, diagrams, examples, translations. |
+| `area/marketplace` | Market index, packaging, distribution, release tooling. |
+| `security` | Security-relevant reports (see also SECURITY.md — report privately first). |
+| `good first issue` | Scoped, documented, no deep harness knowledge needed. |
+
 ## Versioning and release
 
 - Versions follow SemVer; every release updates `CHANGELOG.md`.

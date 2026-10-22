@@ -5,23 +5,25 @@
 [![License: MIT](https://img.shields.io/badge/license-MIT-yellow?style=flat-square)](./LICENSE)
 [![Node >= 22](https://img.shields.io/badge/node-%3E%3D22-339933?style=flat-square&logo=node.js&logoColor=white)](./package.json)
 [![DSH ^0.2.1-rc.2](https://img.shields.io/badge/DSH-%5E0.2.1--rc.2-4D6BFE?style=flat-square)](https://github.com/deepseek-ai/deepseek-harness)
-[![Tests](https://img.shields.io/badge/tests-41%20passing-brightgreen?style=flat-square)](#Разработка)
+[![Tests](https://img.shields.io/badge/tests-44%20passing-brightgreen?style=flat-square)](#Разработка)
+
+[English](./README.md) · **Русский** · [中文](./README.zh.md)
+
+![dsh-provider-proxy: per-provider and per-model proxy routing](assets/banner.png)
 
 Прокси-маршрутизация исходящих запросов по провайдеру и по ID модели для [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness).
 
 Harness применяет **одну** прокси-политику на процесс (`HTTP_PROXY` / `HTTPS_PROXY` / `NO_PROXY` / `ALL_PROXY`). Этот плагин добавляет поверх неё две оси маршрутизации — по хосту провайдера и по ID модели — со страницы настроек Plugins, без обязательного редактирования YAML.
 
-```text
-ctx.llm.stream({ provider, model })
-        │  waterfall llm/stream → AsyncLocalStorage на каждый pull стрима
-        ▼
-   adapter → globalThis.fetch
-        ▼
-   RoutingDispatcher (этот плагин)
-        ├─ правило модели совпало?  → direct / proxy / inherit
-        ├─ правило провайдера совпало? → direct / proxy / inherit
-        ├─ loopback?                → всегда напрямую
-        └─ иначе                    → политика лаунчера (env + NO_PROXY)
+```mermaid
+flowchart LR
+    A["ctx.llm.stream<br/>{provider, model}"] --> B["waterfall llm/stream<br/>AsyncLocalStorage на pull"]
+    B --> C["адаптер → fetch"]
+    C --> D["RoutingDispatcher"]
+    D -->|правило модели| E["direct / proxy / inherit"]
+    D -->|правило хоста| E
+    D -->|loopback| F["всегда напрямую"]
+    D -->|нет совпадений| G["политика процесса<br/>env + NO_PROXY"]
 ```
 
 - **Ось провайдера** (`providers`): совпадение по хосту запроса — точное, поддомены, опционально `host:port`. Действует на каждый `fetch()` в процессе (LLM, веб-поиск, MCP).
@@ -162,7 +164,7 @@ pnpm release:market  # создаёт market/dsh-market.json из package.json �
 
 ```sh
 pnpm install --ignore-scripts   # или: pnpm install --frozen-lockfile
-pnpm test                       # node:test, 41 тест: матчинг, приоритеты, изоляция ALS, egress, wiring, volatile-обновления, освобождение агентов, контракт клиента, логика формы UI
+pnpm test                       # node:test, 44 теста: матчинг, приоритеты, изоляция ALS, egress, wiring, volatile-обновления, освобождение агентов, контракт клиента, логика формы UI
 pnpm check                      # манифест + секреты + валидация маркета + полный набор тестов
 ```
 

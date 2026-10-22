@@ -1,8 +1,9 @@
 /**
- * Localizable copy for the provider-proxy Plugins page.
+ * Localizable copy for the provider-proxy route editor.
  *
  * Loaded as a `require.async` chunk so the entry stays small. Keys must match
- * between `en` and `ru`; `test/client-contract.test.js` enforces the parity.
+ * across every dictionary; `test/client-entry.test.js` enforces the parity
+ * against `en`, and `test/client-contract.test.js` checks the chunk budget.
  */
 window.__ModuleLoader__.load({
   id: '@apolenkov/dsh-provider-proxy/client.strings.js',
@@ -117,6 +118,61 @@ window.__ModuleLoader__.load({
         errBadDefault: 'Выберите inherit или direct.',
         statusSaved: (revision) => `Сохранено · ревизия ${revision}`,
         stateNote: 'Изменения применяются вживую через HMR. Проверьте через $DSH_HOME/provider-proxy/state.json.',
+      },
+      zh: {
+        title: '代理路由',
+        description: '按提供商主机或模型 ID 将请求路由到指定代理。',
+        summary: (providers, models, fallback) => `提供商规则 ${providers} 条 · 模型规则 ${models} 条 · 默认：${fallback}`,
+        unavailable: '插件未加载，无法在此编辑路由。',
+        readOnly: '此部署的设置是只读的。',
+        loading: '正在加载路由…',
+        conflict: '设置已在别处更改。请检查后保存以覆盖，或放弃草稿。',
+        saved: '已保存。',
+        saving: '保存中…',
+        saveFailed: '主机拒绝了这些值，草稿已保留供修正。',
+        save: '保存',
+        discard: '取消',
+        resetDefaults: '恢复默认',
+        addProvider: '添加提供商规则',
+        addModel: '添加模型规则',
+        defaultLabel: '默认路由',
+        defaultHint: '用于没有匹配任何规则的流量。',
+        providerLabel: '名称',
+        providerLabelHint: '便于识别的名称，例如 corp。名称必须唯一。',
+        hostsLabel: '主机',
+        hostsHint: '逗号或换行分隔。匹配该主机及其所有子域；加 :port 可缩小范围。',
+        modelLabel: '模型 ID',
+        modelHint: '精确 ID，或以 * 结尾的前缀。绑定提供商后仅对该路由生效。',
+        providerPinLabel: '绑定提供商（可选）',
+        providerPinHint: 'Harness 中的提供商路由名，例如 opencode-go。留空表示任意提供商。',
+        proxyLabel: '代理',
+        proxyChoiceInherit: '继承进程策略',
+        proxyChoiceDirect: '直连（不走代理）',
+        proxyChoiceCustom: '自定义代理 URL',
+        proxyUrlLabel: '自定义代理 URL',
+        proxyUrlHint: '仅支持 http:// 或 https://。请勿在此填写凭据。',
+        remove: '删除',
+        deleteRow: (what) => `删除「${what}」`,
+        providersTitle: '提供商规则',
+        modelsTitle: '模型规则',
+        noProviders: '暂无提供商规则。',
+        noModels: '暂无模型规则。',
+        precedenceTitle: '匹配顺序',
+        precedence: '先匹配模型规则（带提供商绑定的精确、精确、带绑定的前缀、前缀），再匹配提供商规则（精确主机、子域、端口），最后使用默认路由。',
+        errorSummaryTitle: '有需要修正的问题',
+        submitError: '请修正下方字段后再次保存。',
+        errRequired: '必填。',
+        errDuplicateLabel: '该名称已被使用。',
+        errDuplicateModel: '该模型 ID 已被使用。',
+        errBadPattern: '请输入主机、[IPv6]、host:port 或 [IPv6]:port。',
+        errBadPort: '端口需在 1–65535 之间。',
+        errBadProxy: '请输入 inherit、direct 或 http(s):// URL。',
+        errNoCreds: '请勿在此填写代理凭据。',
+        errBadProvider: '提供商绑定不能包含空格。',
+        errBadModelId: '模型 ID 不能包含空格。',
+        errBadDefault: '请选择 inherit 或 direct。',
+        statusSaved: (revision) => `已保存 · 修订 ${revision}`,
+        stateNote: '修改通过 HMR 实时生效。可用 $DSH_HOME/provider-proxy/state.json 核对。',
       },
     };
     return { STRINGS };

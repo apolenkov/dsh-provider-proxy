@@ -6,17 +6,45 @@ DeepSeek Harness installs a single undici global dispatcher from the launch envi
 
 ## Flow
 
-```text
-ctx.llm.stream({ provider, model })
-        │  llm/stream waterfall → als.run({provider, model}) around each pull
-        ▼
-   adapter → globalThis.fetch
-        ▼
-   RoutingDispatcher (this plugin, installed as the global dispatcher)
-        ├─ model rule matched?  → direct / proxy / inherit
-        ├─ host rule matched?   → direct / proxy / inherit
-        ├─ loopback?            → always direct
-        └─ otherwise            → captured dispatcher (launcher policy)
+```mermaid
+flowchart TD
+    A["ctx.llm.stream({provider, model})"] --> B["llm/stream waterfall"]
+    B --> C["als.run(store) around each pull"]
+    C --> D["adapter → globalThis.fetch"]
+    D --> E{"RoutingDispatcher"}
+    E -->|model rule| F["direct / proxy / inherit"]
+    E -->|host rule| F
+    E -->|loopback| G["always direct"]
+    E -->|no rule| H["captured dispatcher<br/>(launcher policy)"]
+    F --> I["undici Pool or ProxyAgent"]
+    G --> I
+    H --> I
+```
+
+Resolution order inside the dispatcher (first match wins):
+
+```mermaid
+flowchart LR
+    A["provider-pinned exact model"] --> B["bare exact model"]
+    B --> C["provider-pinned prefix"]
+    C --> D["bare prefix"]
+    D --> E["provider host rule"]
+    E --> F["default"]
+```
+
+Apply outcomes recorded in `state.json`:
+
+```mermaid
+stateDiagram-v2
+    [*] --> active: routes installed
+    [*] --> idle: no rules configured
+    [*] --> rejected: invalid configuration (previous routes kept)
+    [*] --> failed: undici missing / install failed
+    active --> active: volatile update
+    active --> idle: all rules removed
+    active --> rejected: invalid update
+    rejected --> active: valid update
+    failed --> active: retry on update
 ```
 
 ## Files

@@ -1,8 +1,25 @@
 # Proxy UI
 
-Open **Plugins** in the sidebar → open the **dsh-provider-proxy** bundle → **Configure**. The page edits the Host entry `provider-proxy` through the shared settings form.
+The same editor is reachable from two seats, so nobody has to learn both:
 
-![Proxy routes page: default route, provider rule, and model rule](../assets/screenshots/proxy-page-providers.png)
+1. **Settings → Прокси / Proxy routes** — a first-class settings page beside **Models**. This is where most people will look.
+2. **Plugins → dsh-provider-proxy → Configure** — the bundle's own row page.
+
+Both seats edit the Host entry `provider-proxy` through the shared settings form; there is one implementation and one source of truth.
+
+![Proxy routes page in Settings](../assets/screenshots/settings-proxy-routes.png)
+
+![The same editor on the bundle page: default route, provider rule, and model rule](../assets/screenshots/proxy-page-providers.png)
+
+## Why these two seats, and not the Models provider card
+
+The Models page exposes `settings.models.provider-card`, keyed by the provider's
+settings namespace, for **adapter-family plugins** that own that namespace. This
+plugin is not an adapter family: it has no namespace of its own, and a keyed
+registration would *replace* whichever plugin owns the key. It therefore adds its
+own `settings.section` page instead, next to Models, and leaves the provider
+cards untouched. The UI still uses the Model/Provider vocabulary, so the two
+pages read the same way.
 
 ## What you see
 

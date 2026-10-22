@@ -5,23 +5,25 @@
 [![License: MIT](https://img.shields.io/badge/license-MIT-yellow?style=flat-square)](./LICENSE)
 [![Node >= 22](https://img.shields.io/badge/node-%3E%3D22-339933?style=flat-square&logo=node.js&logoColor=white)](./package.json)
 [![DSH ^0.2.1-rc.2](https://img.shields.io/badge/DSH-%5E0.2.1--rc.2-4D6BFE?style=flat-square)](https://github.com/deepseek-ai/deepseek-harness)
-[![Tests](https://img.shields.io/badge/tests-41%20passing-brightgreen?style=flat-square)](#development)
+[![Tests](https://img.shields.io/badge/tests-44%20passing-brightgreen?style=flat-square)](#development)
+
+**English** · [Русский](./README.ru.md) · [中文](./README.zh.md)
+
+![dsh-provider-proxy: per-provider and per-model proxy routing](assets/banner.png)
 
 Per-provider and per-model outbound proxy routing for [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness).
 
 DeepSeek Harness applies **one** proxy policy per process (`HTTP_PROXY` / `HTTPS_PROXY` / `NO_PROXY` / `ALL_PROXY`). This plugin layers two routing axes on top of it, configurable per provider host and per model ID — from a Plugins settings page, without touching YAML unless you want to.
 
-```text
-ctx.llm.stream({ provider, model })
-        │  llm/stream waterfall → AsyncLocalStorage store per stream pull
-        ▼
-   adapter → globalThis.fetch
-        ▼
-   RoutingDispatcher (this plugin)
-        ├─ model rule matched?  → direct / proxy / inherit
-        ├─ host rule matched?   → direct / proxy / inherit
-        ├─ loopback?            → always direct
-        └─ otherwise            → the launcher’s policy (env + NO_PROXY)
+```mermaid
+flowchart LR
+    A["ctx.llm.stream<br/>{provider, model}"] --> B["llm/stream waterfall<br/>AsyncLocalStorage per pull"]
+    B --> C["adapter → fetch"]
+    C --> D["RoutingDispatcher"]
+    D -->|model rule| E["direct / proxy / inherit"]
+    D -->|host rule| E
+    D -->|loopback| F["always direct"]
+    D -->|no match| G["process policy<br/>env + NO_PROXY"]
 ```
 
 - **Host axis** (`providers`): matches the request URL host — exact, subdomains, optional `host:port`. Applies to every `fetch()` in the process (LLM, web search, MCP).
@@ -162,7 +164,7 @@ pnpm release:market  # writes market/dsh-market.json from package.json + HEAD
 
 ```sh
 pnpm install --ignore-scripts   # or: pnpm install --frozen-lockfile
-pnpm test                       # node:test, 41 tests: matching, precedence, ALS isolation, egress, wiring, volatile updates, agent retirement, client contract, UI form logic
+pnpm test                       # node:test, 44 tests: matching, precedence, ALS isolation, egress, wiring, volatile updates, agent retirement, client contract, UI form logic
 pnpm check                      # manifest + secrets + market validation + full test suite
 ```
 

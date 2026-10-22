@@ -19,8 +19,10 @@
     "icon.svg",
     "README.md",
     "README.ru.md",
+    "README.zh.md",
     "LICENSE",
-    "CHANGELOG.md"
+    "CHANGELOG.md",
+    "ROADMAP.md"
   ],
   "scripts": {
     "test": "node --test",

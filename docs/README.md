@@ -12,4 +12,4 @@ Start with the [README](../README.md) (English) or [README.ru.md](../README.ru.m
 | [publishing.md](./publishing.md) | You are releasing this plugin: repository URL, npm scope, market index, hub listing. |
 | [marketplace.md](./marketplace.md) | You want this plugin listed in a DSH market index or the community hub. |
 
-Contributor workflow lives in [CONTRIBUTING.md](../CONTRIBUTING.md); security reporting in [SECURITY.md](../SECURITY.md).
+The release plan and open questions live in [ROADMAP.md](../ROADMAP.md). Contributor workflow lives in [CONTRIBUTING.md](../CONTRIBUTING.md); security reporting in [SECURITY.md](../SECURITY.md).
