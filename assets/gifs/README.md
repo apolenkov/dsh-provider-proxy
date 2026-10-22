@@ -1,8 +1,8 @@
 # UI GIFs
 
-Recorded walkthroughs live here once they are captured against a scratch profile with loopback endpoints only:
+Recorded walkthroughs live here, captured against a scratch profile with loopback endpoints only:
 
-- `proxy-ui.gif` — open Plugins → dsh-provider-proxy → Configure, add the Muse Spark rule, trigger and fix a validation error, save, and show the confirmation.
+- [`proxy-ui.gif`](./proxy-ui.gif) (960px, 4 frames × 1.5 s, loops) — open Plugins → dsh-provider-proxy → Configure, show the configured Muse Spark rule, trigger and fix a validation error, save.
 
 Rules while recording:
 

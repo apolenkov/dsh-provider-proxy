@@ -134,6 +134,12 @@ dsh plugin --profile <profile> add /absolute/path/to/dsh-provider-proxy
 - Правило модели не срабатывает на немодельный трафик того же хоста, а правило хоста никогда не переопределяет `localhost` / loopback.
 - URL прокси с учётными данными принимаются транспортом, но отклоняются интерфейсом; предпочитайте прокси без аутентификации в URL.
 
+## Демонстрация
+
+![Страница Proxy routes: правила провайдера и модели Muse Spark, встроенная ошибка валидации и успешное сохранение](assets/gifs/proxy-ui.gif)
+
+Записано в тестовом профиле с loopback-прокси: откройте Configure бандла, добавьте правило модели Muse Spark, вызовите и исправьте ошибку валидации, сохраните. Отдельные кадры — в [`assets/screenshots/`](./assets/screenshots/); повторить запись можно скриптом [`assets/scripts/record-proxy-ui.sh`](./assets/scripts/record-proxy-ui.sh).
+
 ## Разработка
 
 ```sh

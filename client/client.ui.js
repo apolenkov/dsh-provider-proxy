@@ -13,9 +13,6 @@ window.__ModuleLoader__.load({
     const { useEffect, useRef, useState } = React;
     const h = React.createElement;
 
-    const { CSS } = props;
-    if (typeof CSS !== 'string' || CSS === '') throw new Error('provider-proxy: missing theme CSS');
-
     let rowSeq = 0;
     function nextKey(prefix) {
       rowSeq += 1;
