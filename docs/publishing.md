@@ -75,13 +75,30 @@ node scripts/verify-market.mjs market/dsh-market.json
 Commit `market/dsh-market.json` with the release tag, or host it wherever your
 index is served. `market/dsh-market.example.json` stays a template.
 
-## 5. List in the community hub
+## 5. Marketplace index — verified end to end
+
+The generated index works in a real DSH profile with the experimental market
+bundle enabled:
+
+1. `plugin-market` row configured with
+   `https://raw.githubusercontent.com/apolenkov/dsh-provider-proxy/main/market/dsh-market.json`.
+2. **Plugins → Discover** lists the entry with its icon, title, labels, author,
+   and version.
+3. **Install** fetches the git source pinned in the index
+   (`github:apolenkov/dsh-provider-proxy#<commit>`), adds it to the profile, and
+   the bundle page opens with the Proxy routes configuration UI.
+
+![Discover tab listing Provider Proxy](../assets/screenshots/market-discover.png)
+
+![Proxy routes page of the bundle installed from the market](../assets/screenshots/market-installed-config.png)
+
+## 6. List in the community hub
 
 1. Add the `dsh-plugin` topic to the public repository (the hub discovers plugins by topic).
 2. Open a submission issue through [dsh.market](https://dsh.market/) if the hub requires one.
 3. After acceptance, add the hub badge to both READMEs.
 
-## 6. After release
+## 7. After release
 
 - Verify the published bundle loads: install it into a scratch profile, open
   Plugins → provider-proxy → Configure, and confirm `$DSH_HOME/provider-proxy/state.json`

@@ -44,6 +44,7 @@
         "en": "Per-provider and per-model outbound proxy routing for DeepSeek Harness",
         "ru": "Направляйте хосты провайдеров и ID моделей через выбранные прокси."
       },
+      "icon": "https://raw.githubusercontent.com/apolenkov/dsh-provider-proxy/main/icon.svg",
       "author": "dsh-provider-proxy contributors",
       "homepage": "https://github.com/apolenkov/dsh-provider-proxy",
       "repository": {
@@ -66,11 +67,11 @@
       "versions": [
         {
           "version": "0.1.0",
-          "publishTimestamp": 1792669381,
+          "publishTimestamp": 1792671388,
           "source": {
             "type": "git",
             "url": "https://github.com/apolenkov/dsh-provider-proxy.git",
-            "commit": "db2d652bf67641ac7aa94dbe9988eac63c2c0e5c"
+            "commit": "44a56c4c8d36edf22d2f02342e043a867daea255"
           },
           "engines": {
             "dsh": "^0.2.1-rc.2"

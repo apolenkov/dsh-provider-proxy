@@ -90,6 +90,7 @@ const document = {
         en: manifest.description,
         ru: 'Направляйте хосты провайдеров и ID моделей через выбранные прокси.',
       },
+      icon: `https://raw.githubusercontent.com/apolenkov/dsh-provider-proxy/main/icon.svg`,
       author: 'dsh-provider-proxy contributors',
       homepage: url,
       repository: { url: `${url}.git` },
