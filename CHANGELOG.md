@@ -13,7 +13,8 @@ and versions follow [Semantic Versioning](https://semver.org/).
 - Diagnostics file `$DSH_HOME/provider-proxy/state.json` recording apply outcome and routes.
 - Removed proxy rules retire and close their cached proxy agents instead of leaking them for the process lifetime.
 - Egress, concurrency, wiring, and manifest test suites (`node --test`).
-- DSH marketplace format-1 example index and validating tooling.
+- DSH marketplace format-1 example index, a generator for the production index, and validating tooling.
+- Verified Discover-to-install flow: the published index installs the bundle from its pinned git source, and the configuration UI loads.
 
 ## [0.1.0] - 2026-10-22
 
