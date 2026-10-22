@@ -1,0 +1,82 @@
+{
+  "format": 1,
+  "title": {
+    "en": "dsh-provider-proxy",
+    "ru": "dsh-provider-proxy"
+  },
+  "description": {
+    "en": "Per-provider and per-model proxy routing plugin index.",
+    "ru": "Индекс плагина маршрутизации прокси по провайдерам и моделям."
+  },
+  "metadata": {
+    "categories": {
+      "networking": {
+        "title": {
+          "en": "Networking",
+          "ru": "Сеть"
+        }
+      }
+    },
+    "labels": {
+      "proxy": {
+        "title": {
+          "en": "Proxy",
+          "ru": "Прокси"
+        }
+      },
+      "llm": {
+        "title": {
+          "en": "LLM routing",
+          "ru": "Маршрутизация LLM"
+        }
+      }
+    },
+    "sortKeys": {}
+  },
+  "plugins": [
+    {
+      "name": "@apolenkov/dsh-provider-proxy",
+      "title": {
+        "en": "Provider Proxy",
+        "ru": "Маршруты прокси"
+      },
+      "description": {
+        "en": "Per-provider and per-model outbound proxy routing for DeepSeek Harness",
+        "ru": "Направляйте хосты провайдеров и ID моделей через выбранные прокси."
+      },
+      "author": "dsh-provider-proxy contributors",
+      "homepage": "https://github.com/apolenkov/dsh-provider-proxy",
+      "repository": {
+        "url": "https://github.com/apolenkov/dsh-provider-proxy.git"
+      },
+      "metadata": {
+        "category": "networking",
+        "keywords": [
+          "proxy",
+          "provider",
+          "model",
+          "routing"
+        ],
+        "labels": [
+          "proxy",
+          "llm"
+        ],
+        "sortKeys": {}
+      },
+      "versions": [
+        {
+          "version": "0.1.0",
+          "publishTimestamp": 1792669174,
+          "source": {
+            "type": "git",
+            "url": "https://github.com/apolenkov/dsh-provider-proxy.git",
+            "commit": "1885bf133f6df95102a6ad7433fa40bbbba79368"
+          },
+          "engines": {
+            "dsh": "^0.2.1-rc.2"
+          }
+        }
+      ]
+    }
+  ]
+}

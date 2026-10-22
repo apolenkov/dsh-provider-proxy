@@ -33,7 +33,7 @@ ctx.llm.stream({ provider, model })
 **Из git** (рекомендуется, пока пакет не опубликован под финальным npm-именем):
 
 ```sh
-dsh plugin --profile <profile> add git+https://github.com/apolenkov/dsh-provider-proxy.git#<commit>
+dsh plugin --profile <profile> add git+https://github.com/apolenkov/dsh-provider-proxy.git#v0.1.0
 ```
 
 **Из локальной копии:**

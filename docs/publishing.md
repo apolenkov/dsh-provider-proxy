@@ -15,7 +15,13 @@ identity decisions below need a human.
 Git-only distribution needs neither decision: `dsh plugin add git+ssh://…` works
 today and is documented in the README.
 
-## 1. Point the repository at its public home
+## 1. Repository and package identity (decided)
+
+- Public repository: <https://github.com/apolenkov/dsh-provider-proxy> (public, topics `dsh-plugin`, `deepseek-harness`, `proxy`, `model-routing`).
+- npm package name: `@apolenkov/dsh-provider-proxy`.
+- Production market index: `market/dsh-market.json`, generated with `pnpm release:market`.
+
+## 2. Point the repository at its public home
 
 ```sh
 # repository URL (no angle brackets, canonical https form)

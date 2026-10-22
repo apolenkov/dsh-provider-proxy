@@ -10,7 +10,9 @@ The Host reads `format: 1` JSON indexes that list installable bundles with displ
 pnpm check:market
 ```
 
-The committed example is [`market/dsh-market.example.json`](../market/dsh-market.example.json). It is a **template**: replace the example repository URL with the real one and the zero commit with the exact published commit, then re-run the check. Production indexes must not contain `example.com` URLs or placeholder commits.
+The committed example is [`market/dsh-market.example.json`](../market/dsh-market.example.json) — a template.
+The generated production index is [`market/dsh-market.json`](../market/dsh-market.json), built from
+`package.json` and the release commit with `pnpm release:market`; both are checked by `pnpm check:market`.
 
 An entry needs, per version:
 
@@ -21,7 +23,7 @@ An entry needs, per version:
 Install from a git source:
 
 ```sh
-dsh plugin --profile <profile> add git+https://github.com/apolenkov/dsh-provider-proxy.git#<commit>
+dsh plugin --profile <profile> add git+https://github.com/apolenkov/dsh-provider-proxy.git#v0.1.0
 ```
 
 ## 2. Community hub (dsh.market)

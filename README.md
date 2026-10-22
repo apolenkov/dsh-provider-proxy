@@ -33,7 +33,7 @@ Prerequisite: a DSH profile with a plugin manager (the Desktop app and `dsh web`
 **From git** (recommended until the package is published under its final npm scope):
 
 ```sh
-dsh plugin --profile <profile> add git+https://github.com/apolenkov/dsh-provider-proxy.git#<commit>
+dsh plugin --profile <profile> add git+https://github.com/apolenkov/dsh-provider-proxy.git#v0.1.0
 ```
 
 **From a local checkout:**
