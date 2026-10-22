@@ -34,7 +34,7 @@ disagree. Keep `name` in `cordis.patch.yml` and `$DSH_HOME` expectations in sync
 
 ```sh
 pnpm install --frozen-lockfile --ignore-scripts
-pnpm check            # manifest, secrets, market example, 34 tests
+pnpm check            # manifest, secrets, market example, full test suite
 pnpm check:release    # strict: refuses placeholders + validates the generated index
 ```
 
