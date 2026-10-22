@@ -158,7 +158,7 @@ pnpm test                       # node:test, 34 tests: matching, precedence, ALS
 pnpm check                      # manifest + secrets + market validation + full test suite
 ```
 
-See [CONTRIBUTING.md](./CONTRIBUTING.md) (workflow, commit style, release checklist) and [docs/](./docs/) (architecture, configuration reference, UI guide, marketplace, troubleshooting, glossary).
+See [CONTRIBUTING.md](./CONTRIBUTING.md) (workflow, commit style, release checklist), [CODE_OF_CONDUCT.md](./CODE_OF_CONDUCT.md), and [docs/](./docs/) — an index with architecture, configuration reference, UI guide, publishing checklist, marketplace notes, troubleshooting, and a glossary.
 
 ## Marketplace
 

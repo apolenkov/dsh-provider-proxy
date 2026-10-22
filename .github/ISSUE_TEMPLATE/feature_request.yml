@@ -1,0 +1,30 @@
+name: Feature request
+description: A routing axis, UI improvement, or integration this plugin should support.
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: What are you unable to do today?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed behavior
+      description: How should it work? Mention whether it belongs to the host axis, the model axis, or the UI.
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: Environment variables, a different dispatcher, another plugin, or doing nothing.
+  - type: checkboxes
+    id: scope
+    attributes:
+      label: Scope check
+      options:
+        - label: This does not require patching the DeepSeek Harness installation itself.
+        - label: I can help test this on a scratch profile with loopback endpoints.

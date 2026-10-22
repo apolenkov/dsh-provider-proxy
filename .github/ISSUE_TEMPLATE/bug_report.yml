@@ -1,0 +1,42 @@
+name: Bug report
+description: Something routed wrongly, failed to load, or broke the host.
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for the report. Please remove credentials, private hostnames, and `$DSH_HOME` contents before posting.
+        For vulnerabilities use the private advisory flow in SECURITY.md instead.
+  - type: input
+    id: versions
+    attributes:
+      label: Versions
+      description: DSH version, plugin version, Node version, OS.
+      placeholder: "DSH 0.2.1-rc.2, plugin 0.1.0, Node 24.22, macOS 26.1"
+    validations:
+      required: true
+  - type: textarea
+    id: config
+    attributes:
+      label: Route configuration
+      description: The `provider-proxy` entry (sanitized) or a screenshot of the Proxy routes page.
+      render: yaml
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected vs actual routing
+      description: Which host or model should have gone through which proxy, and what happened instead.
+    validations:
+      required: true
+  - type: textarea
+    id: diagnostics
+    attributes:
+      label: Diagnostics
+      description: "`$DSH_HOME/provider-proxy/state.json` (redact anything private) and the relevant log lines."
+  - type: checkboxes
+    id: hygiene
+    attributes:
+      label: Hygiene
+      options:
+        - label: I removed credentials, private hostnames, and personal data from this report.
+          required: true
