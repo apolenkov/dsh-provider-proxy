@@ -140,7 +140,12 @@ window.__ModuleLoader__.load({
             setPhase('saved');
             setMessage(t('statusSaved', baseRevision));
           } else {
+            // Keep the draft, but re-base on the latest revision so the next Save
+            // overwrites instead of conflicting again — Discard reloads instead.
+            const latest = formApi.getSnapshot();
+            if (latest && latest.revision !== undefined) setBaseRevision(latest.revision);
             setPhase('conflict');
+            setMessage(t('conflict'));
           }
         } catch (failure) {
           setPhase('failed');
@@ -222,7 +227,13 @@ window.__ModuleLoader__.load({
         errorItems.length > 0 ? h('div', { className: 'px-error-summary', role: 'alert', tabIndex: -1, ref: summaryRef, id: 'px-error-summary' },
           h('h3', null, t('errorSummaryTitle')),
           h('ul', null, errorItems.map((item, i) => h('li', { key: `err-${i}` }, h('a', { href: item.href }, item.text))))) : null,
-        h('form', { className: 'px-card', onSubmit: onSave, noValidate: true },
+        h('form', {
+          className: 'px-card',
+          onSubmit: onSave,
+          // Field blur re-runs validation so errors surface before Save, as documented.
+          onBlur: () => validate(draft),
+          noValidate: true,
+        },
           h('div', { className: 'px-field' },
             h('label', { className: 'px-label', htmlFor: 'px-default' }, t('defaultLabel')),
             h('select', {
