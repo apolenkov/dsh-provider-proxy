@@ -3,7 +3,7 @@
 # This bundle only inserts the plugin. Routes belong to the profile:
 #
 #   - id: provider-proxy
-#     name: 'dsh-provider-proxy'
+#     name: '@apolenkov/dsh-provider-proxy'
 #     config:
 #       default: inherit
 #       providers:
@@ -14,4 +14,4 @@
 #         'longcat-*': inherit
 - insert:
     - id: provider-proxy
-      name: 'dsh-provider-proxy'
+      name: '@apolenkov/dsh-provider-proxy'

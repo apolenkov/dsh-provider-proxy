@@ -8,9 +8,9 @@ identity decisions below need a human.
 
 | Decision | Why it is not automated | Recommendation |
 |---|---|---|
-| Public repository URL (`<OWNER>/dsh-provider-proxy`) | Needs the GitHub account/organization | Create the repository, then set it in `package.json` |
-| npm package name | The unscoped `dsh-provider-proxy` is already published by an unrelated package (v0.6.0), so the registry refuses this one | Publish as `@<scope>/dsh-provider-proxy` |
-| npm scope ownership | Registry permissions | Use a scope you control; keep the bundle name and row id unchanged |
+| ~~Public repository URL~~ | Decided | `https://github.com/apolenkov/dsh-provider-proxy` |
+| ~~npm package name~~ | Decided | `@apolenkov/dsh-provider-proxy` — the unscoped name belongs to an unrelated package (v0.6.0) |
+| npm publish credentials | The registry token on this machine is expired | Run `npm login`, then `npm publish --access public` |
 
 Git-only distribution needs neither decision: `dsh plugin add git+ssh://…` works
 today and is documented in the README.
@@ -19,16 +19,15 @@ today and is documented in the README.
 
 ```sh
 # repository URL (no angle brackets, canonical https form)
-npm pkg set repository.url="git+https://github.com/<OWNER>/dsh-provider-proxy.git"
+npm pkg set repository.url="git+https://github.com/apolenkov/dsh-provider-proxy.git"
 
 # only when publishing to npm under a scope
-npm pkg set name="@<scope>/dsh-provider-proxy"
-npm pkg set publishConfig.access=public
 ```
 
-If the npm name changes, update the bundle id in `client/client.js`
-(`const BUNDLE_ID = …`) and re-run the contract test; the test fails while they
-disagree. Keep `name` in `cordis.patch.yml` and `$DSH_HOME` expectations in sync.
+The package name is already final: `@apolenkov/dsh-provider-proxy`. It appears in
+`package.json`, `cordis.patch.yml` (loader `name`), the browser module ids in
+`client/client.js` and its chunks, and the examples. The contract test fails if
+the bundle id drifts from the manifest name.
 
 ## 2. Verify before anything leaves the machine
 
@@ -38,8 +37,8 @@ pnpm check            # manifest, secrets, market example, full test suite
 pnpm check:release    # strict: refuses placeholders + validates the generated index
 ```
 
-`check:release` fails while `package.json` still has `<OWNER>` in the repository
-URL — that is the intended guard.
+`check:release` fails while `package.json` still has an owner placeholder in the
+repository URL — that guard is now satisfied.
 
 ## 3. Publish
 
@@ -47,7 +46,7 @@ URL — that is the intended guard.
 
 ```sh
 git tag v0.1.0 && git push --follow-tags
-dsh plugin --profile <profile> add "git+https://github.com/<OWNER>/dsh-provider-proxy.git#$(git rev-parse HEAD)"
+dsh plugin --profile <profile> add "git+https://github.com/apolenkov/dsh-provider-proxy.git#$(git rev-parse HEAD)"
 ```
 
 **npm (scoped name only):**

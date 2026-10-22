@@ -21,7 +21,7 @@ An entry needs, per version:
 Install from a git source:
 
 ```sh
-dsh plugin --profile <profile> add git+https://<OWNER>/dsh-provider-proxy.git#<commit>
+dsh plugin --profile <profile> add git+https://github.com/apolenkov/dsh-provider-proxy.git#<commit>
 ```
 
 ## 2. Community hub (dsh.market)

@@ -1,6 +1,6 @@
 # Worked example from the README and GIFs: one model through its own proxy.
 - id: provider-proxy
-  name: "dsh-provider-proxy"
+  name: "@apolenkov/dsh-provider-proxy"
   config:
     default: inherit
     providers: {}

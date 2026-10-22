@@ -5,7 +5,7 @@
  * between `en` and `ru`; `test/client-contract.test.js` enforces the parity.
  */
 window.__ModuleLoader__.load({
-  id: 'dsh-provider-proxy/client.strings.js',
+  id: '@apolenkov/dsh-provider-proxy/client.strings.js',
   factory() {
     const STRINGS = {
       en: {

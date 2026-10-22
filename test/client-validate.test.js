@@ -6,6 +6,7 @@
  */
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
 
 let V;
 
@@ -19,7 +20,7 @@ async function loadValidate() {
     delete globalThis.window;
   }
   assert.equal(modules.length, 1, 'validate chunk must self-register once');
-  assert.equal(modules[0].id, 'dsh-provider-proxy/client.validate.js');
+  assert.equal(modules[0].id, `${JSON.parse(readFileSync(new URL('../package.json', import.meta.url), 'utf8')).name}/client.validate.js`);
   V = modules[0].factory().valueOf();
   return V;
 }

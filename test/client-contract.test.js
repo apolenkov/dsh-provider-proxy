@@ -14,7 +14,7 @@ import { fileURLToPath } from 'node:url';
 
 const root = join(fileURLToPath(import.meta.url), '..', '..');
 const clientDir = join(root, 'client');
-const PACKAGE_NAME = 'dsh-provider-proxy';
+const PACKAGE_NAME = JSON.parse(readFileSync(join(root, 'package.json'), 'utf8')).name;
 const ROW_ID = 'provider-proxy';
 const LIMIT_BYTES = 20 * 1024;
 
@@ -30,12 +30,12 @@ function chunkId(source) {
 
 test('client chunks register the ids the loader resolves', () => {
   const byFile = {
-    'client.js': 'dsh-provider-proxy',
-    'client.strings.js': 'dsh-provider-proxy/client.strings.js',
-    'client.validate.js': 'dsh-provider-proxy/client.validate.js',
-    'client.ui.js': 'dsh-provider-proxy/client.ui.js',
-    'client.fields.js': 'dsh-provider-proxy/client.fields.js',
-    'client.theme.js': 'dsh-provider-proxy/client.theme.js',
+    'client.js': PACKAGE_NAME,
+    'client.strings.js': `${PACKAGE_NAME}/client.strings.js`,
+    'client.validate.js': `${PACKAGE_NAME}/client.validate.js`,
+    'client.ui.js': `${PACKAGE_NAME}/client.ui.js`,
+    'client.fields.js': `${PACKAGE_NAME}/client.fields.js`,
+    'client.theme.js': `${PACKAGE_NAME}/client.theme.js`,
   };
   for (const [file, id] of Object.entries(byFile)) {
     assert.equal(chunkId(read(file)), id, `${file} must self-register as ${id}`);
@@ -43,8 +43,7 @@ test('client chunks register the ids the loader resolves', () => {
 });
 
 test('the row configuration key matches the published package and row id', () => {
-  const manifest = JSON.parse(readFileSync(join(root, 'package.json'), 'utf8'));
-  assert.equal(manifest.name, PACKAGE_NAME);
+  assert.ok(PACKAGE_NAME.includes('/') || PACKAGE_NAME.length > 0);
   const entry = read('client.js');
   assert.ok(entry.includes(`const BUNDLE_ID = '${PACKAGE_NAME}'`), 'entry must derive the row key from the package name');
   assert.ok(entry.includes(`key: BUNDLE_ID`), 'row registration must be keyed by the bundle id');

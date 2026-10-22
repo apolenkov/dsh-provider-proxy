@@ -6,7 +6,7 @@
  * arrives through `t`, so these components stay locale-agnostic.
  */
 window.__ModuleLoader__.load({
-  id: 'dsh-provider-proxy/client.fields.js',
+  id: '@apolenkov/dsh-provider-proxy/client.fields.js',
   factory(require) {
     const React = require('react');
     const h = React.createElement;

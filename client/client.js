@@ -9,14 +9,14 @@
  * supports for package-local code.
  */
 window.__ModuleLoader__.load({
-  id: 'dsh-provider-proxy',
+  id: '@apolenkov/dsh-provider-proxy',
   factory(require) {
     const React = require('react');
     const h = React.createElement;
 
     const NS = 'provider-proxy';
     const ENTRY_ID = 'provider-proxy';
-    const BUNDLE_ID = 'dsh-provider-proxy';
+    const BUNDLE_ID = '@apolenkov/dsh-provider-proxy';
 
     function ProxyPageShell(props) {
       const [parts, setParts] = React.useState(null);

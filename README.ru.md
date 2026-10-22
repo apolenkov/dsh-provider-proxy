@@ -33,7 +33,7 @@ ctx.llm.stream({ provider, model })
 **Из git** (рекомендуется, пока пакет не опубликован под финальным npm-именем):
 
 ```sh
-dsh plugin --profile <profile> add git+https://<OWNER>/dsh-provider-proxy.git#<commit>
+dsh plugin --profile <profile> add git+https://github.com/apolenkov/dsh-provider-proxy.git#<commit>
 ```
 
 **Из локальной копии:**
@@ -45,7 +45,7 @@ dsh plugin --profile <profile> add /absolute/path/to/dsh-provider-proxy
 
 Затем перезапустите DSH. Бандл вставляет строку `provider-proxy`; маршруты хранятся в конфиге этой строки.
 
-> Замечание про npm: нескоупленное имя `dsh-provider-proxy` уже занято в публичном реестре несвязанным пакетом. До публикации под финальным скоупленным именем устанавливайте из git или локального пути — никогда `pnpm add dsh-provider-proxy` из реестра.
+> Замечание про npm: пакет публикуется (или будет опубликован) под скоупом `@apolenkov/dsh-provider-proxy`; нескоупленное имя `dsh-provider-proxy` уже принадлежит несвязанному пакету в публичном реестре, поэтому никогда не выполняйте `pnpm add dsh-provider-proxy`.
 
 ## Настройка
 

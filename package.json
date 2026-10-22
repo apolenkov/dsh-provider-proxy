@@ -1,5 +1,5 @@
 {
-  "name": "dsh-provider-proxy",
+  "name": "@apolenkov/dsh-provider-proxy",
   "version": "0.1.0",
   "description": "Per-provider and per-model outbound proxy routing for DeepSeek Harness",
   "type": "module",
@@ -38,7 +38,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/<OWNER>/dsh-provider-proxy.git"
+    "url": "git+https://github.com/apolenkov/dsh-provider-proxy.git"
   },
   "publishConfig": {
     "access": "public"

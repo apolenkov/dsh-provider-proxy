@@ -6,7 +6,7 @@
  * and layout live here.
  */
 window.__ModuleLoader__.load({
-  id: 'dsh-provider-proxy/client.theme.js',
+  id: '@apolenkov/dsh-provider-proxy/client.theme.js',
   factory() {
     const CSS = [
       '.px-root{box-sizing:border-box;display:flex;flex-direction:column;gap:14px;font-size:13px;line-height:1.5;color:var(--dsw-alias-label-primary)}',

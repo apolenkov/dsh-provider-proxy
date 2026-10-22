@@ -1,6 +1,6 @@
 # Host-axis example: route whole provider hosts, keep the rest on the launcher policy.
 - id: provider-proxy
-  name: "dsh-provider-proxy"
+  name: "@apolenkov/dsh-provider-proxy"
   config:
     default: inherit
     providers:

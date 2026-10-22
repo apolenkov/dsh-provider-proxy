@@ -33,7 +33,7 @@ Prerequisite: a DSH profile with a plugin manager (the Desktop app and `dsh web`
 **From git** (recommended until the package is published under its final npm scope):
 
 ```sh
-dsh plugin --profile <profile> add git+https://<OWNER>/dsh-provider-proxy.git#<commit>
+dsh plugin --profile <profile> add git+https://github.com/apolenkov/dsh-provider-proxy.git#<commit>
 ```
 
 **From a local checkout:**
@@ -45,7 +45,7 @@ dsh plugin --profile <profile> add /absolute/path/to/dsh-provider-proxy
 
 Then restart DSH. The bundle inserts the `provider-proxy` row; routes live in that row's config.
 
-> npm note: the unscoped name `dsh-provider-proxy` is already taken on the public registry by an unrelated package. Until this project is published under its final scoped name, install from git or a local path — never `pnpm add dsh-provider-proxy` from the registry.
+> npm note: this package is published (or will be) under the scope `@apolenkov/dsh-provider-proxy`; the unscoped name `dsh-provider-proxy` already belongs to an unrelated package on the public registry, so never `pnpm add dsh-provider-proxy`.
 
 ## Configure
 

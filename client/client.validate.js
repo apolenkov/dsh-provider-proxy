@@ -4,7 +4,7 @@
  * chunk is unit-testable from Node by importing the same functions.
  */
 window.__ModuleLoader__.load({
-  id: 'dsh-provider-proxy/client.validate.js',
+  id: '@apolenkov/dsh-provider-proxy/client.validate.js',
   factory() {
     function parseHostsText(value) {
       return String(value || '')

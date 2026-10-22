@@ -3,7 +3,7 @@
 # Precedence: provider-pinned exact id, bare exact id, provider-pinned prefix,
 # bare prefix, then provider host rules, then default.
 - id: provider-proxy
-  name: "dsh-provider-proxy"
+  name: "@apolenkov/dsh-provider-proxy"
   config:
     default: direct
     providers: {}

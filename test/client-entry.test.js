@@ -84,6 +84,9 @@ test('en and ru dictionaries expose identical keys', async () => {
 
 test('row key in the entry always matches the published package name', () => {
   const entry = readFileSync(join(root, 'client', 'client.js'), 'utf8');
-  assert.ok(entry.includes("const BUNDLE_ID = 'dsh-provider-proxy'"), 'row key must derive from the published package name');
+  assert.ok(
+    entry.includes(`const BUNDLE_ID = '${manifest.name}'`),
+    'row key must equal the published package name',
+  );
   assert.ok(!entry.includes('@local/'), 'no local package names may leak into the browser bundle');
 });

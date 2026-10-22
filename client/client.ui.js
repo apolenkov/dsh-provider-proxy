@@ -7,7 +7,7 @@
  * and the active two-letter `lang`.
  */
 window.__ModuleLoader__.load({
-  id: 'dsh-provider-proxy/client.ui.js',
+  id: '@apolenkov/dsh-provider-proxy/client.ui.js',
   factory(require) {
     const React = require('react');
     const { useEffect, useRef, useState } = React;
