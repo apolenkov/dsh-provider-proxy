@@ -2,6 +2,8 @@
 
 Open **Plugins** in the sidebar → open the **dsh-provider-proxy** bundle → **Configure**. The page edits the Host entry `provider-proxy` through the shared settings form.
 
+![Proxy routes page: default route, provider rule, and model rule](../assets/screenshots/proxy-page-providers.png)
+
 ## What you see
 
 - A summary line: rule counts and the default route.
