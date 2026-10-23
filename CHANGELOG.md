@@ -4,6 +4,15 @@ All notable changes to `dsh-provider-proxy` are documented here.
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and versions follow [Semantic Versioning](https://semver.org/).
 
+## [0.2.5] - 2026-10-23
+
+### Changed
+- **Cards at every width:** rules no longer depend on a table + container query. Each rule
+  is a card (header with the rule name and the Remove action, fields in an auto-fit grid:
+  one column in the ~530 px Settings panel, three on the wide Plugins page). Fields always
+  span the card, and the action never overlaps content or scrolls out of view.
+- **Status pill pluralises:** "1 provider rule · 1 model rule" (Russian three-form plurals too).
+
 ## [0.2.4] - 2026-10-23
 
 ### Changed
