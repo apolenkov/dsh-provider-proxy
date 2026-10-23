@@ -4,6 +4,17 @@ All notable changes to `dsh-provider-proxy` are documented here.
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and versions follow [Semantic Versioning](https://semver.org/).
 
+## [0.2.6] - 2026-10-24
+
+### Fixed
+- **Card header action**: the per-rule delete moved from the card bottom into the header
+  next to the rule name, so it never scrolls out alone and adds no dead height.
+- **Duplicate caption removed**: the proxy URL now has a real `<label>` above the input;
+  the format hint shows only in custom mode instead of under every Proxy select.
+- **Rhythm**: `px-field` gap 8, card head margin 14, grid row gap 20; empty error rows
+  collapse (`:empty` + conditional render keeps the `aria-describedby` node); hints 12px;
+  Hosts textarea 48px instead of 66px; Remove button 32px with a disabled state.
+
 ## [0.2.5] - 2026-10-23
 
 ### Changed

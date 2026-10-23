@@ -12,7 +12,7 @@ window.__ModuleLoader__.load({
     const h = React.createElement;
 
     function FieldError({ id, message }) {
-      if (!message) return h('p', { className: 'px-ferr', id }, ' ');
+      if (!message) return h('p', { className: 'px-ferr', id }, '');
       return h('p', { className: 'px-ferr', id, role: 'alert' }, message);
     }
 
@@ -33,7 +33,10 @@ window.__ModuleLoader__.load({
           h('option', { value: 'inherit' }, t('proxyChoiceInherit')),
           h('option', { value: 'direct' }, t('proxyChoiceDirect')),
           h('option', { value: 'custom' }, t('proxyChoiceCustom'))),
-        h('p', { className: 'px-hint', id: `${baseId}-kind-hint` }, t('proxyUrlHint')),
+        kind === 'custom'
+          ? h('p', { className: 'px-hint', id: `${baseId}-kind-hint` }, t('proxyUrlHint'))
+          : null,
+        kind === 'custom' ? h('label', { className: 'px-label', htmlFor: `${baseId}-url`, id: `${baseId}-url-hint` }, t('proxyUrlLabel')) : null,
         kind === 'custom'
           ? h('input', {
             id: `${baseId}-url`,
@@ -48,7 +51,6 @@ window.__ModuleLoader__.load({
             onChange: (event) => onChange({ kind, url: event.target.value }),
           })
           : null,
-        kind === 'custom' ? h('p', { className: 'px-hint', id: `${baseId}-url-hint` }, t('proxyUrlLabel')) : null,
         h(FieldError, { id: `${baseId}-error`, message: value.error }));
     }
 
