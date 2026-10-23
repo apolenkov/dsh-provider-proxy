@@ -4,6 +4,18 @@ All notable changes to `dsh-provider-proxy` are documented here.
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and versions follow [Semantic Versioning](https://semver.org/).
 
+## [0.2.1] - 2026-10-23
+
+### Fixed
+- **Invisible primary button in dark themes**: Save used the brand accent fill
+  (`--dsw-alias-brand-primary`, near-white in the DSH dark theme) with hard-coded white
+  text, so the label disappeared. It now uses the contrast button token pair
+  (`--dsw-alias-button-contrast-fill` + `--dsw-alias-label-primary-inverted`), which stays
+  readable in both light and dark themes.
+- **Clipped rule fields**: the rule table now uses a fixed layout with proportional
+  columns, so the model/host inputs and the row action keep their width instead of
+  squeezing the text out of view at narrow widths.
+
 ## [0.2.0] - 2026-10-22
 
 ### Added
