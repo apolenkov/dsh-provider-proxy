@@ -1,6 +1,6 @@
 {
   "name": "@apolenkov/dsh-provider-proxy",
-  "version": "0.2.6",
+  "version": "0.2.7",
   "description": "Per-provider and per-model outbound proxy routing for DeepSeek Harness",
   "type": "module",
   "main": "index.js",

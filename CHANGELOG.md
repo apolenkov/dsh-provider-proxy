@@ -4,6 +4,14 @@ All notable changes to `dsh-provider-proxy` are documented here.
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and versions follow [Semantic Versioning](https://semver.org/).
 
+## [0.2.7] - 2026-10-24
+
+### Fixed
+- **Vertical spacing around the action row**: the Add/Save/Discard buttons sat flush against
+  the last rule card and the state note sat flush against the buttons. The action row now has
+  16 px above it, section titles get 16 px above them (except at the card top), and the note
+  gets 10 px below the buttons. Horizontal gaps and the right-aligned Save are unchanged.
+
 ## [0.2.6] - 2026-10-24
 
 ### Fixed
