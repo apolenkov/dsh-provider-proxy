@@ -1,5 +1,7 @@
 # Architecture
 
+![How a request is routed](../assets/diagrams/routing-flow.png)
+
 ## One paragraph
 
 DeepSeek Harness installs a single undici global dispatcher from the launch environment. This plugin wraps that dispatcher: every outgoing request is routed per dispatch call, first by the model call that issued it (`provider`/`model` from the `llm/stream` waterfall, carried in an `AsyncLocalStorage` store), then by the request host, otherwise by the previously installed policy. Loopback is always direct. An invalid configuration refuses the whole route set rather than routing anything surprisingly.

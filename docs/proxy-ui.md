@@ -7,6 +7,8 @@ The same editor is reachable from two seats, so nobody has to learn both:
 
 Both seats edit the Host entry `provider-proxy` through the shared settings form; there is one implementation and one source of truth.
 
+![Two seats, one editor](../assets/diagrams/two-seats.png)
+
 ![Proxy routes page in Settings](../assets/screenshots/settings-proxy-routes.png)
 
 The page follows the harness locale (Settings → General → Language), not the
