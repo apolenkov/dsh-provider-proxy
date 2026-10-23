@@ -148,7 +148,7 @@ dsh plugin --profile <profile> add /absolute/path/to/dsh-provider-proxy
 
 ![Страница Proxy routes: правила провайдера и модели Muse Spark, встроенная ошибка валидации и успешное сохранение](assets/gifs/proxy-ui.gif)
 
-Записано в тестовом профиле с loopback-прокси: откройте Configure бандла, добавьте правило модели Muse Spark, вызовите и исправьте ошибку валидации, сохраните. Отдельные кадры — в [`assets/screenshots/`](./assets/screenshots/); повторить запись можно скриптом [`assets/scripts/record-proxy-ui.sh`](./assets/scripts/record-proxy-ui.sh).
+Записано в тестовом профиле с loopback-прокси: откройте Configure бандла, добавьте правило модели Muse Spark, вызовите и исправьте ошибку валидации, сохраните. Отдельные кадры — в [`assets/screenshots/en/`](./assets/screenshots/en/); повторить запись можно скриптом [`assets/scripts/record-proxy-ui.sh`](./assets/scripts/record-proxy-ui.sh).
 
 ## Публикация
 

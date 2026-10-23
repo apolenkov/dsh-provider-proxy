@@ -9,15 +9,15 @@ Both seats edit the Host entry `provider-proxy` through the shared settings form
 
 ![Two seats, one editor](../assets/diagrams/two-seats.png)
 
-![Proxy routes page in Settings](../assets/screenshots/settings-proxy-routes.png)
+![Proxy routes page in Settings](../assets/screenshots/en/settings-proxy-routes.png)
 
 The page follows the harness locale (Settings → General → Language), not the
 browser language: `en`, `zh`, and a plugin-provided `ru` dictionary.
 Switching the harness to 中文 renders the whole page in Chinese:
 
-![Same page with the harness locale set to Chinese](../assets/screenshots/settings-proxy-routes-zh.png)
+![Same page with the harness locale set to Chinese](../assets/screenshots/zh/settings-proxy-routes.png)
 
-![The same editor on the bundle page: default route, provider rule, and model rule](../assets/screenshots/proxy-page-providers.png)
+![The same editor on the bundle page: default route, provider rule, and model rule](../assets/screenshots/en/proxy-page-routes.png)
 
 ## Why these two seats, and not the Models provider card
 

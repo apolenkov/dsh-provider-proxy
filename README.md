@@ -148,7 +148,7 @@ A live rule can be proven by pointing it at a dead proxy (`http://127.0.0.1:9`) 
 
 ![Proxy routes settings page: provider and Muse Spark model rules, an inline validation error, and a successful save](assets/gifs/proxy-ui.gif)
 
-Recorded in a scratch profile with a loopback proxy: open the bundle’s Configure page, add the Muse Spark model rule, trigger and fix a validation error, save. Individual frames live in [`assets/screenshots/`](./assets/screenshots/); reproduce or re-record with [`assets/scripts/record-proxy-ui.sh`](./assets/scripts/record-proxy-ui.sh).
+Recorded in a scratch profile with a loopback proxy: open the bundle’s Configure page, add the Muse Spark model rule, trigger and fix a validation error, save. Individual frames live in [`assets/screenshots/en/`](./assets/screenshots/en/); reproduce or re-record with [`assets/scripts/record-proxy-ui.sh`](./assets/scripts/record-proxy-ui.sh).
 
 ## Publishing
 
