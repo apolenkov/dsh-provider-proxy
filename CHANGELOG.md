@@ -4,6 +4,19 @@ All notable changes to `dsh-provider-proxy` are documented here.
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and versions follow [Semantic Versioning](https://semver.org/).
 
+## [0.2.4] - 2026-10-23
+
+### Changed
+- **Rules render as cards instead of a table.** Each rule is a card with a muted
+  "Provider rule N" / "Model rule N" header, the action in the header, and a responsive grid
+  (`repeat(auto-fit, minmax(260px, 1fr))`): one full-width column at the ~530 px Settings
+  panel, three columns on the wide Plugins page. This removes the table-layout leftovers that
+  squeezed fields to half the card and left the action floating at the card bottom.
+- **Spacing scale:** root gap 16, card padding 16, field gap 6, controls 40 px high, hints
+  `line-height: 1.45`; section rhythm is now 4/8/12/16 instead of ad-hoc values.
+- **Copy:** the status pill pluralises properly — "1 provider rule · 1 model rule" instead of
+  "1 provider rule(s)", with Russian three-form plurals.
+
 ## [0.2.3] - 2026-10-23
 
 ### Fixed

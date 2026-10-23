@@ -8,11 +8,23 @@
 window.__ModuleLoader__.load({
   id: '@apolenkov/dsh-provider-proxy/client.strings.js',
   factory() {
+    // Russian needs three plural forms; keep the helper next to the dictionary.
+    function plural(n, one, few, many) {
+      const mod10 = n % 10;
+      const mod100 = n % 100;
+      if (mod10 === 1 && mod100 !== 11) return one;
+      if (mod10 >= 2 && mod10 <= 4 && (mod100 < 12 || mod100 > 14)) return few;
+      return many;
+    }
     const STRINGS = {
       en: {
         title: 'Proxy routes',
         description: 'Route provider hosts and model IDs through selected proxies.',
-        summary: (providers, models, fallback) => `${providers} provider rule(s) · ${models} model rule(s) · default: ${fallback}`,
+        summary: (providers, models, fallback) => {
+          const p = providers === 1 ? 'provider rule' : 'provider rules';
+          const m = models === 1 ? 'model rule' : 'model rules';
+          return `${providers} ${p} · ${models} ${m} · default: ${fallback}`;
+        },
         unavailable: 'This plugin is not loaded, so its routes cannot be edited here.',
         readOnly: 'This deployment stores settings read-only.',
         loading: 'Loading routes…',
@@ -42,6 +54,8 @@ window.__ModuleLoader__.load({
         proxyUrlLabel: 'Custom proxy URL',
         proxyUrlHint: 'http:// or https:// only. Never paste credentials here.',
         remove: 'Remove',
+        providerRuleName: (n) => `Provider rule ${n}`,
+        modelRuleName: (n) => `Model rule ${n}`,
         deleteRow: (what) => `Remove ${what}`,
         providersTitle: 'Provider rules',
         modelsTitle: 'Model rules',
@@ -67,7 +81,11 @@ window.__ModuleLoader__.load({
       ru: {
         title: 'Маршруты прокси',
         description: 'Направляйте хосты провайдеров и ID моделей через выбранные прокси.',
-        summary: (providers, models, fallback) => `Правил провайдеров: ${providers} · правил моделей: ${models} · по умолчанию: ${fallback}`,
+        summary: (providers, models, fallback) => {
+          const p = plural(providers, 'правило провайдера', 'правила провайдеров', 'правил провайдеров');
+          const m = plural(models, 'правило модели', 'правила моделей', 'правил моделей');
+          return `${providers} ${p} · ${models} ${m} · по умолчанию: ${fallback}`;
+        },
         unavailable: 'Плагин не загружен, поэтому маршруты здесь изменить нельзя.',
         readOnly: 'В этом развёртывании настройки только для чтения.',
         loading: 'Загрузка маршрутов…',
@@ -97,6 +115,8 @@ window.__ModuleLoader__.load({
         proxyUrlLabel: 'Свой URL прокси',
         proxyUrlHint: 'Только http:// или https://. Не вставляйте сюда учётные данные.',
         remove: 'Удалить',
+        providerRuleName: (n) => `Правило провайдера ${n}`,
+        modelRuleName: (n) => `Правило модели ${n}`,
         deleteRow: (what) => `Удалить «${what}»`,
         providersTitle: 'Правила провайдеров',
         modelsTitle: 'Правила моделей',
@@ -152,6 +172,8 @@ window.__ModuleLoader__.load({
         proxyUrlLabel: '自定义代理 URL',
         proxyUrlHint: '仅支持 http:// 或 https://。请勿在此填写凭据。',
         remove: '删除',
+        providerRuleName: (n) => `提供商规则 ${n}`,
+        modelRuleName: (n) => `模型规则 ${n}`,
         deleteRow: (what) => `删除「${what}」`,
         providersTitle: '提供商规则',
         modelsTitle: '模型规则',
