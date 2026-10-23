@@ -2,7 +2,7 @@
 
 Recorded walkthroughs live here, captured against a scratch profile with loopback endpoints only:
 
-- [`proxy-ui.gif`](./proxy-ui.gif) (960px, 4 frames × 1.5 s, loops) — open Plugins → dsh-provider-proxy → Configure, show the configured Muse Spark rule, trigger and fix a validation error, save.
+- [`proxy-ui.gif`](./proxy-ui.gif) (960px, 5 frames × 1.5 s, loops, English UI) — open Plugins → dsh-provider-proxy → Configure, show the configured Muse Spark rule, trigger and fix a validation error, save, then open the same editor in Settings → Proxy routes. Individual frames live in [`assets/screenshots/en/`](../screenshots/en/).
 
 Rules while recording:
 

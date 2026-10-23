@@ -4,8 +4,13 @@
 # What it does:
 #   1. Opens the Plugins page and the dsh-provider-proxy Configure page.
 #   2. Stages the Muse Spark example from docs/usage.
-#   3. Captures screenshots of: default view, staged edit, validation error, save.
+#   3. Captures screenshots of: default view, staged edit, validation error,
+#      save, and the same editor in Settings → Proxy routes.
 #   4. Assembles assets/gifs/proxy-ui.gif from the screenshots.
+#
+# Record with the harness locale set to English (Settings → General → Language,
+# or `- id: locale` with `preference: en` in the scratch profile) so the
+# walkthrough ships in English; crop the session sidebar out of every frame.
 #
 # What it never does:
 #   - no real proxy credentials, hosts, or model traffic;
