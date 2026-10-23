@@ -4,6 +4,16 @@ All notable changes to `dsh-provider-proxy` are documented here.
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and versions follow [Semantic Versioning](https://semver.org/).
 
+## [0.2.2] - 2026-10-23
+
+### Fixed
+- **Rules collapse into full-width cards in narrow panels**: the Settings modal gives the
+  editor only ~530 px, so a four-column table left ~106 px per field and clipped the text.
+  A container query now stacks each rule into a card below 760 px — every field spans the
+  panel, the row action stays visible, and no horizontal scroll appears. Wide pages keep
+  the table.
+- Rebalanced the wide table columns so the longest model id is no longer clipped by 2 px.
+
 ## [0.2.1] - 2026-10-23
 
 ### Fixed
