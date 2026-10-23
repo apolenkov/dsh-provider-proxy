@@ -4,6 +4,14 @@ All notable changes to `dsh-provider-proxy` are documented here.
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and versions follow [Semantic Versioning](https://semver.org/).
 
+## [0.2.3] - 2026-10-23
+
+### Fixed
+- **Rule action moved into the card corner**: in the narrow Settings panel the row action sat
+  at the bottom of a tall card, added ~44 px of height, and scrolled out of view below the
+  fold. It is now a compact 28 px button pinned to the card's top-right corner (still labelled
+  for screen readers) and the fields keep the full width next to it.
+
 ## [0.2.2] - 2026-10-23
 
 ### Fixed
