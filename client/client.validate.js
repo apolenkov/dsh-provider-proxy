@@ -66,6 +66,14 @@ window.__ModuleLoader__.load({
       return null;
     }
 
+    /** Keep a rule's injected headers through a UI edit; the page has no editor for them yet. */
+    function headersOf(spec) {
+      if (!spec || typeof spec !== 'object' || Array.isArray(spec)) return undefined;
+      const headers = spec.headers;
+      if (!headers || typeof headers !== 'object' || Array.isArray(headers)) return undefined;
+      return Object.keys(headers).length === 0 ? undefined : { ...headers };
+    }
+
     function snapshotToDraft(value) {
       const src = value || {};
       const providers = Object.entries(src.providers || {}).map(([label, spec], index) => {
@@ -78,13 +86,14 @@ window.__ModuleLoader__.load({
           hosts,
           proxyKind: kind,
           proxyUrl: kind === 'custom' ? proxy : '',
+          headers: headersOf(spec),
           errors: {},
         };
       });
       const models = Object.entries(src.models || {}).map(([id, spec], index) => {
         if (typeof spec === 'string') {
           const kind = spec === 'inherit' || spec === 'direct' ? spec : 'custom';
-          return { key: `model-${index}-${id}`, id: String(id), provider: '', proxyKind: kind, proxyUrl: kind === 'custom' ? spec : '', errors: {} };
+          return { key: `model-${index}-${id}`, id: String(id), provider: '', proxyKind: kind, proxyUrl: kind === 'custom' ? spec : '', headers: undefined, errors: {} };
         }
         const proxy = spec && typeof spec.proxy === 'string' ? spec.proxy : '';
         const kind = proxy === 'inherit' || proxy === 'direct' ? proxy : 'custom';
@@ -94,6 +103,7 @@ window.__ModuleLoader__.load({
           provider: spec && typeof spec.provider === 'string' ? spec.provider : '',
           proxyKind: kind,
           proxyUrl: kind === 'custom' ? proxy : '',
+          headers: headersOf(spec),
           errors: {},
         };
       });
@@ -191,7 +201,8 @@ window.__ModuleLoader__.load({
       for (const row of draft.providers) {
         const label = String(row.label || '').trim();
         if (!label) continue;
-        providers[label] = { hosts: parseHostsText(row.hosts), proxy: proxyOf(row.proxyKind, row.proxyUrl) };
+        const headers = headersOf(row);
+        providers[label] = { hosts: parseHostsText(row.hosts), proxy: proxyOf(row.proxyKind, row.proxyUrl), ...(headers ? { headers } : {}) };
       }
       const models = {};
       for (const row of draft.models) {
@@ -199,7 +210,8 @@ window.__ModuleLoader__.load({
         if (!id) continue;
         const provider = String(row.provider || '').trim();
         const proxy = proxyOf(row.proxyKind, row.proxyUrl);
-        models[id] = provider ? { proxy, provider } : proxy;
+        const headers = headersOf(row);
+        models[id] = provider ? { proxy, provider, ...(headers ? { headers } : {}) } : proxy;
       }
       return { default: draft.default, providers, models };
     }

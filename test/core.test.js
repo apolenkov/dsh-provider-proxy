@@ -11,13 +11,17 @@ import { AsyncLocalStorage } from 'node:async_hooks'
 import {
   DIRECT,
   INHERIT,
+  SESSION_HEADER_TOKEN,
   collectProxyUris,
   describeRoutes,
+  injectHeaders,
   isLoopback,
   normalizeConfig,
   normalizeHostname,
+  opencodeSessionId,
   resolveDecision,
   resolveHost,
+  resolveMatch,
   resolveModel,
   wrapWithStore,
 } from '../core.js'
@@ -214,4 +218,61 @@ test('wrapWithStore propagates early return to the underlying stream', async () 
   await iterator.next()
   await iterator.return()
   assert.equal(finalized, true)
+})
+
+test('a model rule carries headers and the fallback carries none', () => {
+  const routes = normalizeConfig({
+    models: {
+      'beam-free': { proxy: 'direct', provider: 'opencode-go', headers: { 'x-opencode-session': SESSION_HEADER_TOKEN } },
+    },
+  })
+  assert.deepEqual(routes.models[0].headers, [{ name: 'x-opencode-session', value: SESSION_HEADER_TOKEN }])
+  const match = resolveMatch(routes, { provider: 'opencode-go', model: 'beam-free' }, new URL('https://opencode.ai/inference/go/v1/chat/completions'))
+  assert.equal(match.decision.kind, 'direct')
+  assert.deepEqual(match.headers, [{ name: 'x-opencode-session', value: SESSION_HEADER_TOKEN }])
+  const unmatched = resolveMatch(routes, { provider: 'opencode-go', model: 'other' }, new URL('https://example.test/x'))
+  assert.deepEqual(unmatched.headers, [])
+})
+
+test('host rules can inject headers too', () => {
+  const routes = normalizeConfig({
+    providers: {
+      gateway: { hosts: ['gateway.test'], proxy: 'direct', headers: { 'x-gateway': 'on' } },
+    },
+  })
+  assert.deepEqual(routes.hosts[0].headers, [{ name: 'x-gateway', value: 'on' }])
+  const match = resolveMatch(routes, {}, new URL('https://api.gateway.test/v1'))
+  assert.deepEqual(match.headers, [{ name: 'x-gateway', value: 'on' }])
+})
+
+test('an invalid headers mapping refuses the whole configuration', () => {
+  for (const headers of [{ '': 'x' }, { 'bad name': 'x' }, { 'x-test': '' }, { 'x-test': 'a\nb' }, 'nope']) {
+    const sink = collector()
+    assert.equal(normalizeConfig({ models: { m: { proxy: 'direct', provider: 'p', headers } } }, sink.report), undefined)
+    assert.equal(sink.messages.length, 1)
+  }
+})
+
+test('injectHeaders appends to the flat undici header list and expands the session token', () => {
+  const options = { origin: 'https://opencode.ai', method: 'POST', headers: ['authorization', 'Bearer x'] }
+  const injected = injectHeaders(options, [{ name: 'x-opencode-session', value: SESSION_HEADER_TOKEN }])
+  assert.equal(injected.headers.length, 4)
+  assert.deepEqual(injected.headers.slice(0, 2), ['authorization', 'Bearer x'])
+  assert.equal(injected.headers[2], 'x-opencode-session')
+  assert.match(injected.headers[3], /^ses_[0-9a-f]{12}[0-9A-Za-z]{14}$/)
+  assert.deepEqual(options.headers, ['authorization', 'Bearer x'], 'input must not be mutated')
+})
+
+test('a session id is canonical-shaped and unique per request', () => {
+  const first = opencodeSessionId()
+  const second = opencodeSessionId()
+  assert.match(first, /^ses_[0-9a-f]{12}[0-9A-Za-z]{14}$/)
+  assert.notEqual(first, second)
+})
+
+test('describeRoutes marks rules that inject headers', () => {
+  const routes = normalizeConfig({
+    models: { 'beam-free': { proxy: 'direct', provider: 'opencode-go', headers: { 'x-opencode-session': SESSION_HEADER_TOKEN } } },
+  })
+  assert.match(describeRoutes(routes), /opencode-go\/beam-free→direct\+hdr/)
 })

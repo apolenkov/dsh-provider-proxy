@@ -94,6 +94,19 @@ Add or edit the row in the profile’s `cordis.patch.yml` (HMR applies it live, 
 
 An invalid entry refuses the whole configuration (fail-closed): the plugin logs the reason, keeps the previous routes, and never partially applies them.
 
+### Injected headers
+
+A rule can add headers to the requests it matches. The token `{{opencodeSession}}` becomes a fresh OpenCode-shaped session id (`ses_…`) on every dispatch — useful for anonymous gateways that demand a per-conversation header the model adapter does not send for hand-declared models:
+
+```yaml
+    models:
+      "beam-free":
+        provider: opencode-go
+        proxy: "http://127.0.0.1:1301"
+        headers:
+          x-opencode-session: "{{opencodeSession}}"
+```
+
 ### Proxy values
 
 | Value | Meaning |

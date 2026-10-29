@@ -20,6 +20,10 @@ export const DIRECT = Object.freeze({ kind: 'direct' })
 /** Defer to the process proxy policy resolved from the environment. */
 export const INHERIT = Object.freeze({ kind: 'inherit' })
 
+import { SESSION_HEADER_TOKEN, injectHeaders, opencodeSessionId, parseHeaders } from './core/headers.js'
+
+export { SESSION_HEADER_TOKEN, injectHeaders, opencodeSessionId }
+
 const PORT_PATTERN = /^\d{1,5}$/
 
 /**
@@ -127,6 +131,7 @@ export function normalizeConfig(raw, report = () => {}) {
         continue
       }
       const decision = parseDecision(spec.proxy, `providers.${label}.proxy`, fail)
+      const headers = parseHeaders(spec.headers, `providers.${label}.headers`, fail)
       const configured = spec.hosts === undefined ? [] : Array.isArray(spec.hosts) ? spec.hosts : [spec.hosts]
       if (configured.length === 0) {
         fail(`providers.${label}.hosts: expected at least one host`)
@@ -138,7 +143,7 @@ export function normalizeConfig(raw, report = () => {}) {
           fail(`providers.${label}.hosts: ${JSON.stringify(entry)} is not a host or host:port`)
           continue
         }
-        if (decision !== undefined) hosts.push({ ...pattern, decision, label })
+        if (decision !== undefined && headers !== undefined) hosts.push({ ...pattern, decision, headers, label })
       }
     }
   }
@@ -155,6 +160,7 @@ export function normalizeConfig(raw, report = () => {}) {
         continue
       }
       const decision = parseDecision(spec.proxy, `models[${JSON.stringify(key)}].proxy`, fail)
+      const headers = parseHeaders(spec.headers, `models[${JSON.stringify(key)}].headers`, fail)
       if (spec.provider !== undefined && (typeof spec.provider !== 'string' || spec.provider === '')) {
         fail(`models[${JSON.stringify(key)}].provider: expected a provider route name`)
         continue
@@ -165,8 +171,8 @@ export function normalizeConfig(raw, report = () => {}) {
         fail(`models[${JSON.stringify(key)}]: a wildcard needs a prefix`)
         continue
       }
-      if (decision !== undefined) {
-        models.push({ pattern, wildcard, provider: spec.provider, decision, label: key })
+      if (decision !== undefined && headers !== undefined) {
+        models.push({ pattern, wildcard, provider: spec.provider, decision, headers, label: key })
       }
     }
     models.sort((left, right) => rank(left) - rank(right))
@@ -206,42 +212,76 @@ function effectivePort(url) {
 }
 
 /**
- * Match the model axis.
+ * Match the model axis to the winning rule.
+ * @param {{models: object[]}} routes - normalized routes.
+ * @param {string | undefined} provider - harness provider route name.
+ * @param {string | undefined} model - model id.
+ * @returns {object | undefined} the winning rule.
+ */
+function matchModelRule(routes, provider, model) {
+  if (typeof model !== 'string' || model === '') return undefined
+  for (const rule of routes.models) {
+    if (rule.provider !== undefined && rule.provider !== provider) continue
+    const hit = rule.wildcard ? model.startsWith(rule.pattern) : model === rule.pattern
+    if (hit) return rule
+  }
+  return undefined
+}
+
+/**
+ * Match the host axis to the winning rule.
+ * @param {{hosts: object[]}} routes - normalized routes.
+ * @param {string} hostname - request hostname.
+ * @param {string} port - effective request port.
+ * @returns {object | undefined} the winning rule.
+ */
+function matchHostRule(routes, hostname, port) {
+  const host = normalizeHostname(hostname)
+  for (const rule of routes.hosts) {
+    if (rule.port !== undefined && rule.port !== port) continue
+    if (host === rule.suffix || host.endsWith(`.${rule.suffix}`)) return rule
+  }
+  return undefined
+}
+
+/**
+ * Resolve the winning decision for the model axis.
  * @param {{models: object[]}} routes - normalized routes.
  * @param {string | undefined} provider - harness provider route name.
  * @param {string | undefined} model - model id.
  * @returns {object | undefined} the winning decision.
  */
 export function resolveModel(routes, provider, model) {
-  if (typeof model !== 'string' || model === '') return undefined
-  for (const rule of routes.models) {
-    if (rule.provider !== undefined && rule.provider !== provider) continue
-    const hit = rule.wildcard ? model.startsWith(rule.pattern) : model === rule.pattern
-    if (hit) return rule.decision
-  }
-  return undefined
+  return matchModelRule(routes, provider, model)?.decision
 }
 
 /**
- * Match the host axis.
+ * Resolve the winning decision for the host axis.
  * @param {{hosts: object[]}} routes - normalized routes.
  * @param {string} hostname - request hostname.
  * @param {string} port - effective request port.
  * @returns {object | undefined} the winning decision.
  */
 export function resolveHost(routes, hostname, port) {
-  const host = normalizeHostname(hostname)
-  for (const rule of routes.hosts) {
-    if (rule.port !== undefined && rule.port !== port) continue
-    if (host === rule.suffix || host.endsWith(`.${rule.suffix}`)) return rule.decision
-  }
-  return undefined
+  return matchHostRule(routes, hostname, port)?.decision
+}
+
+/**
+ * Resolve one request to its full rule: decision plus headers to inject.
+ * Rules without `headers` carry an empty list.
+ * @param {object} routes - normalized routes.
+ * @param {{provider?: string, model?: string} | undefined} store - model store.
+ * @param {URL} url - request URL.
+ * @returns {{decision: object, headers: {name: string, value: string}[]}} the winning rule.
+ */
+export function resolveMatch(routes, store, url) {
+  const rule = matchModelRule(routes, store?.provider, store?.model) ?? matchHostRule(routes, url.hostname, effectivePort(url))
+  return rule ?? { decision: routes.fallback, headers: [] }
 }
 
 /** Resolve one request: model rule, then host rule, then the configured fallback. */
 export function resolveDecision(routes, store, url) {
-  const decided = resolveModel(routes, store?.provider, store?.model) ?? resolveHost(routes, url.hostname, effectivePort(url))
-  return decided ?? routes.fallback
+  return resolveMatch(routes, store, url).decision
 }
 
 /**
@@ -270,13 +310,14 @@ export function installRoutes(target, next) {
 
 /** One-line summary for the startup log; never includes proxy credentials unless the URL carries them. */
 export function describeRoutes(routes) {
+  const mark = (rule) => (Array.isArray(rule.headers) && rule.headers.length > 0 ? '+hdr' : '')
   const parts = routes.models.map((rule) => {
     const prefix = rule.provider === undefined ? '' : `${rule.provider}/`
-    return `${prefix}${rule.label}→${describeDecision(rule.decision)}`
+    return `${prefix}${rule.label}→${describeDecision(rule.decision)}${mark(rule)}`
   })
   for (const rule of routes.hosts) {
     const port = rule.port === undefined ? '' : `:${rule.port}`
-    parts.push(`${rule.suffix}${port}→${describeDecision(rule.decision)}`)
+    parts.push(`${rule.suffix}${port}→${describeDecision(rule.decision)}${mark(rule)}`)
   }
   parts.push(`default→${describeDecision(routes.fallback)}`)
   return parts.join(', ')
@@ -376,10 +417,11 @@ export function createRoutingDispatcher({ undici, previous, routes, als }) {
       if (url === undefined) return poolFor(String(options.origin)).dispatch(options, handler)
       const store = als.getStore()
       if (isLoopback(url.hostname)) return poolFor(url.origin).dispatch(options, handler)
-      const decision = resolveDecision(routes, store, url)
-      if (decision.kind === 'direct') return poolFor(url.origin).dispatch(options, handler)
-      if (decision.kind === 'proxy') return proxyFor(decision.uri).dispatch(options, handler)
-      return inheritedFor(url).dispatch(options, handler)
+      const match = resolveMatch(routes, store, url)
+      const outgoing = injectHeaders(options, match.headers)
+      if (match.decision.kind === 'direct') return poolFor(url.origin).dispatch(outgoing, handler)
+      if (match.decision.kind === 'proxy') return proxyFor(match.decision.uri).dispatch(outgoing, handler)
+      return inheritedFor(url).dispatch(outgoing, handler)
     }
 
     /** Close cached proxy agents whose rule was removed; pools stay cached like a stock Agent. */

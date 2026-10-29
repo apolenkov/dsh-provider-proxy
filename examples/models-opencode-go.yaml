@@ -1,0 +1,24 @@
+# Free OpenCode Go models: anonymous gateway needs a per-conversation header.
+# The value is replaced with a fresh `ses_`-shaped id on every dispatch.
+- id: provider-proxy
+  name: "dsh-provider-proxy"
+  config:
+    default: inherit
+    providers:
+      corp:
+        hosts: ["llm.internal.example"]
+        proxy: direct
+    models:
+      "beam-free":
+        provider: opencode-go
+        proxy: "http://127.0.0.1:1301"
+        headers:
+          x-opencode-session: "{{opencodeSession}}"
+      "iceman-contributor-free":
+        provider: opencode-go
+        proxy: direct
+        headers:
+          x-opencode-session: "{{opencodeSession}}"
+      "muse-spark-1.3-contributor":
+        provider: opencode-go
+        proxy: "http://127.0.0.1:1301"

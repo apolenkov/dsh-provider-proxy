@@ -46,9 +46,18 @@ function proxyValueSchema() {
   ])
 }
 
+/**
+ * Headers a rule injects into the matching requests.
+ *
+ * Values are sent as written; the token `{{opencodeSession}}` is replaced with a
+ * fresh OpenCode-shaped session id at dispatch time.
+ */
+const HeaderMapSchema = z.dict(z.string().min(1)).default({})
+
 const ProviderSchema = z.object({
   hosts: z.union([z.string().min(1), z.array(z.string().min(1)).min(1)]),
   proxy: proxyValueSchema().default('inherit'),
+  headers: HeaderMapSchema,
 })
 
 const ModelRuleSchema = z.union([
@@ -56,6 +65,7 @@ const ModelRuleSchema = z.union([
   z.object({
     proxy: proxyValueSchema().default('inherit'),
     provider: z.string().min(1),
+    headers: HeaderMapSchema,
   }),
 ])
 
