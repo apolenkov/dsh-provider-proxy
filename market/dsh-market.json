@@ -67,7 +67,7 @@
       "versions": [
         {
           "version": "0.3.0",
-          "publishTimestamp": 1792794152,
+          "publishTimestamp": 1793290654,
           "source": {
             "type": "npm",
             "name": "@apolenkov/dsh-provider-proxy",
