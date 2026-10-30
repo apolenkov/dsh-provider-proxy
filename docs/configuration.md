@@ -47,7 +47,7 @@ Both axes accept `headers`. A header value may contain the token `{{opencodeSess
           x-opencode-session: "{{opencodeSession}}"
 ```
 
-Rules are validated as a unit: an invalid header name, an empty value, or a value containing a line break refuses the whole configuration. Loopback traffic never receives injected headers, because loopback always bypasses routing.
+Rules are validated as a unit: an invalid header name, an empty value, or a value containing a line break refuses the whole configuration. Loopback traffic never receives injected headers, because loopback always bypasses routing. The Plugins page edits the same map as `Name: value` lines, one per line.
 
 Precedence (first match wins):
 

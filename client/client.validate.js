@@ -74,6 +74,43 @@ window.__ModuleLoader__.load({
       return Object.keys(headers).length === 0 ? undefined : { ...headers };
     }
 
+    /** Render headers as the editable `Name: value` lines. */
+    function formatHeadersText(headers) {
+      if (!headers || typeof headers !== 'object') return '';
+      return Object.entries(headers).map(([name, value]) => `${name}: ${value}`).join('\n');
+    }
+
+    /** Parse `Name: value` lines; the first colon separates, values keep the rest. */
+    function parseHeadersText(text) {
+      const headers = [];
+      for (const raw of String(text || '').split('\n')) {
+        const line = raw.trim();
+        if (line === '') continue;
+        const colon = line.indexOf(':');
+        if (colon <= 0) {
+          headers.push({ name: line, value: '', bad: true });
+          continue;
+        }
+        const name = line.slice(0, colon).trim();
+        const value = line.slice(colon + 1).trim();
+        headers.push({ name, value, bad: name === '' || value === '' });
+      }
+      return headers;
+    }
+
+    const HEADER_NAME = /^[!#$%&'*+.^_`|~0-9A-Za-z-]+$/;
+
+    /** One diagnostic for the header lines, or null when they are valid. */
+    function validateHeadersText(text, t) {
+      const seen = new Set();
+      for (const header of parseHeadersText(text)) {
+        if (header.bad || !HEADER_NAME.test(header.name)) return t('errBadHeader');
+        if (seen.has(header.name.toLowerCase())) return t('errDuplicateHeader');
+        seen.add(header.name.toLowerCase());
+      }
+      return null;
+    }
+
     function snapshotToDraft(value) {
       const src = value || {};
       const providers = Object.entries(src.providers || {}).map(([label, spec], index) => {
@@ -86,7 +123,7 @@ window.__ModuleLoader__.load({
           hosts,
           proxyKind: kind,
           proxyUrl: kind === 'custom' ? proxy : '',
-          headers: headersOf(spec),
+          headersText: formatHeadersText(headersOf(spec)),
           errors: {},
         };
       });
@@ -103,7 +140,7 @@ window.__ModuleLoader__.load({
           provider: spec && typeof spec.provider === 'string' ? spec.provider : '',
           proxyKind: kind,
           proxyUrl: kind === 'custom' ? proxy : '',
-          headers: headersOf(spec),
+          headersText: formatHeadersText(headersOf(spec)),
           errors: {},
         };
       });
@@ -162,6 +199,11 @@ window.__ModuleLoader__.load({
           rowErrors.proxy = proxyError;
           ok = false;
         }
+        const headersError = validateHeadersText(row.headersText, t);
+        if (headersError) {
+          rowErrors.headers = headersError;
+          ok = false;
+        }
         errors.providers[index] = rowErrors;
       });
       const ids = new Set();
@@ -191,9 +233,23 @@ window.__ModuleLoader__.load({
           rowErrors.proxy = proxyError;
           ok = false;
         }
+        const headersError = validateHeadersText(row.headersText, t);
+        if (headersError) {
+          rowErrors.headers = headersError;
+          ok = false;
+        }
         errors.models[index] = rowErrors;
       });
       return { ok, errors };
+    }
+
+    /** Draft row headers as a plain object, or undefined when empty. */
+    function headersObjectOf(row) {
+      const entries = parseHeadersText(row && row.headersText).filter((header) => !header.bad);
+      if (entries.length === 0) return undefined;
+      const headers = {};
+      for (const header of entries) headers[header.name] = header.value;
+      return headers;
     }
 
     function serializeDraft(draft) {
@@ -201,7 +257,7 @@ window.__ModuleLoader__.load({
       for (const row of draft.providers) {
         const label = String(row.label || '').trim();
         if (!label) continue;
-        const headers = headersOf(row);
+        const headers = headersObjectOf(row);
         providers[label] = { hosts: parseHostsText(row.hosts), proxy: proxyOf(row.proxyKind, row.proxyUrl), ...(headers ? { headers } : {}) };
       }
       const models = {};
@@ -210,12 +266,12 @@ window.__ModuleLoader__.load({
         if (!id) continue;
         const provider = String(row.provider || '').trim();
         const proxy = proxyOf(row.proxyKind, row.proxyUrl);
-        const headers = headersOf(row);
+        const headers = headersObjectOf(row);
         models[id] = provider ? { proxy, provider, ...(headers ? { headers } : {}) } : proxy;
       }
       return { default: draft.default, providers, models };
     }
 
-    return { parseHostsText, splitHostPort, proxyOf, validateProxyValue, snapshotToDraft, validateDraft, serializeDraft };
+    return { parseHostsText, splitHostPort, proxyOf, validateProxyValue, formatHeadersText, parseHeadersText, validateHeadersText, snapshotToDraft, validateDraft, serializeDraft };
   },
 });

@@ -28,7 +28,7 @@ window.__ModuleLoader__.load({
     function ProxyConfigPage(props) {
       const { view, form, STRINGS, V, lang, CSS, F } = props;
       if (!F || typeof F.ProxyValueEditor !== 'function') throw new Error('provider-proxy: missing field primitives');
-      const { FieldError, ProxyValueEditor } = F;
+      const { FieldError, ProxyValueEditor, HeadersEditor } = F;
       const dict = (STRINGS && STRINGS[lang]) || STRINGS.en;
       const t = (key, ...args) => {
         const value = dict[key];
@@ -237,6 +237,14 @@ window.__ModuleLoader__.load({
                   }),
                   h('p', { className: 'px-hint', id: `px-provider-${index}-hosts-hint` }, t('hostsHint')),
                   h(FieldError, { id: `px-provider-${index}-hosts-error`, message: fieldError('providers', index, 'hosts') })),
+                h(HeadersEditor, {
+                  t,
+                  baseId: `px-provider-${index}-headers`,
+                  disabled,
+                  value: row.headersText,
+                  error: fieldError('providers', index, 'headers'),
+                  onChange: (text) => updateProvider(index, { headersText: text }),
+                }),
                 h(ProxyValueEditor, {
                   t,
                   baseId: `px-provider-${index}-proxy`,
@@ -280,6 +288,14 @@ window.__ModuleLoader__.load({
                   }),
                   h('p', { className: 'px-hint', id: `px-model-${index}-provider-hint` }, t('providerPinHint')),
                   h(FieldError, { id: `px-model-${index}-provider-error`, message: fieldError('models', index, 'provider') })),
+                h(HeadersEditor, {
+                  t,
+                  baseId: `px-model-${index}-headers`,
+                  disabled,
+                  value: row.headersText,
+                  error: fieldError('models', index, 'headers'),
+                  onChange: (text) => updateModel(index, { headersText: text }),
+                }),
                 h(ProxyValueEditor, {
                   t,
                   baseId: `px-model-${index}-proxy`,

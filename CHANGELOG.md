@@ -5,6 +5,7 @@
 ### Added
 - **Injected headers per rule**: `providers[label].headers` and `models[id].headers` add headers to the requests a rule matches. The value token `{{opencodeSession}}` expands to a fresh OpenCode-shaped `ses_`-id on every dispatch, so an anonymous gateway that requires a per-conversation header works with a hand-declared model route.
 - `injectHeaders` and `opencodeSessionId` exports in the routing core, covered by unit tests.
+- **Headers editor in the Plugins page**: both rule kinds show an "Injected headers" field (one `Name: value` per line), validated before save; the token `{{opencodeSession}}` is editable there too.
 - Route summary marks rules with injected headers (`+hdr`) in the startup log and `state.json`.
 
 ### Changed

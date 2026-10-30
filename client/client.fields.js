@@ -54,6 +54,26 @@ window.__ModuleLoader__.load({
         h(FieldError, { id: `${baseId}-error`, message: value.error }));
     }
 
-    return { FieldError, ProxyValueEditor };
+    function HeadersEditor(props) {
+      const { t, value, onChange, disabled, baseId, error } = props;
+      return h('div', { className: 'px-field' },
+        h('label', { className: 'px-label', htmlFor: `${baseId}-headers` }, t('headersLabel')),
+        h('textarea', {
+          id: `${baseId}-headers`,
+          className: 'px-textarea',
+          value: value || '',
+          disabled,
+          rows: 3,
+          autoComplete: 'off',
+          spellCheck: false,
+          'aria-invalid': error ? 'true' : 'false',
+          'aria-describedby': `${baseId}-headers-hint ${baseId}-headers-error`,
+          onChange: (event) => onChange(event.target.value),
+        }),
+        h('p', { className: 'px-hint', id: `${baseId}-headers-hint` }, t('headersHint')),
+        h(FieldError, { id: `${baseId}-headers-error`, message: error }));
+    }
+
+    return { FieldError, ProxyValueEditor, HeadersEditor };
   },
 });

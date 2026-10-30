@@ -33,8 +33,8 @@ pages read the same way.
 
 - A summary line: rule counts and the default route.
 - **Default route** select (`inherit` / `direct`).
-- **Provider rules** table: label, hosts, proxy (inherit / direct / custom URL).
-- **Model rules** table: model ID, optional provider pin, proxy.
+- **Provider rules** cards: label, hosts, injected headers, proxy (inherit / direct / custom URL).
+- **Model rules** cards: model ID, optional provider pin, injected headers, proxy.
 - Save / Discard / Reset to defaults, plus a precedence reminder and a diagnostics note.
 
 The page renders inside the plugin manager’s bundle-configuration slot between the bundle description and its rows. The Models page is untouched: this page mirrors the model/provider vocabulary but writes a different entry.
